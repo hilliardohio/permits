@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>City of Hilliard – Permitting & Code Enforcement Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.js" integrity="sha384-iU8HYtnGQ8Cy4zl7gbNMOhsDTTKX02BTXptVP/vqAWIaTfM7isw76iyZCsjL2eVi" crossorigin="anonymous"></script>
+<style>
+  :root{
+    color-scheme: light;
+    --navy:#1b2a4a; --blue:#2f6fed; --teal:#17a2b8; --amber:#f0a63d; --green:#2f9e58; --red:#d9534f;
+    --gray-bg:#f4f6f9; --card-bg:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--gray-bg);color:var(--text);}
+  header{background:linear-gradient(135deg,var(--navy),#2a3f6b);color:#fff;padding:28px 36px;}
+  header h1{margin:0 0 4px 0;font-size:24px;font-weight:700;}
+  header p{margin:0;color:#c7d2e8;font-size:14px;}
+  .container{max-width:1280px;margin:0 auto;padding:24px 32px 60px;}
+  .section-title{font-size:18px;font-weight:700;margin:36px 0 14px;color:var(--navy);display:flex;align-items:center;gap:8px;}
+  .section-title .badge{font-size:11px;font-weight:600;background:var(--blue);color:#fff;padding:3px 9px;border-radius:12px;}
+  .grid{display:grid;gap:18px;}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  @media(max-width:900px){.grid-3,.grid-2{grid-template-columns:1fr;}}
+  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+  .card h3{margin:0 0 12px;font-size:14px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px;}
+  @media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr);}}
+  .kpi{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+  .kpi .label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;}
+  .kpi .value{font-size:24px;font-weight:700;color:var(--navy);margin-top:4px;}
+  .kpi .sub{font-size:12px;color:var(--muted);margin-top:2px;}
+  .chart-wrap{position:relative;height:280px;}
+  .chart-wrap.tall{height:320px;}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--border);}
+  th:first-child,td:first-child{text-align:left;}
+  thead th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.03em;}
+  tbody tr:last-child td{border-bottom:none;font-weight:700;background:#f8fafc;}
+  .note{font-size:12.5px;color:var(--muted);background:#fff7e6;border:1px solid #f4dfa8;border-radius:10px;padding:12px 16px;margin-top:28px;line-height:1.5;}
+  .note b{color:#8a5a00;}
+  .pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;}
+  .pill.ytd{background:#e6f4ff;color:#0958d9;}
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:20px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>City of Hilliard, OH — Permitting & Code Enforcement Dashboard</h1>
+  <p>Source: OpenGov Permitting & Licensing (Explore → Reports / Analytics) · Data verified through July 22, 2026 · 2026 figures are Year-to-Date (Jan 1 – Jul 22)</p>
+</header>
+
+<div class="container">
+
+  <div class="section-title">Total Permits & Revenue by Department <span class="badge">Annual + 2026 YTD</span></div>
+  <div class="kpi-row" id="kpiDept"></div>
+
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Permits Issued by Department</h3>
+      <div class="chart-wrap"><canvas id="chartDeptPermits"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>Revenue Collected by Department</h3>
+      <div class="chart-wrap"><canvas id="chartDeptRevenue"></canvas></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;">
+    <h3>Detail — Permits & Revenue by Department</h3>
+    <table id="tblDept"></table>
+  </div>
+
+  <div class="section-title">New Single Family Homes, 2–3 Family & Apartment Units <span class="badge">Annual + 2026 YTD</span></div>
+  <div class="kpi-row" id="kpiHousing"></div>
+  <div class="card">
+    <h3>New Homes & Apartment Units Permitted, by Year</h3>
+    <div class="chart-wrap" style="height:520px;"><canvas id="chartHousingCombined"></canvas></div>
+  </div>
+  <div class="card" style="margin-top:18px;">
+    <h3>2026 New Home Permits by Subdivision <span class="pill ytd">YTD thru Jul 22</span></h3>
+    <div class="chart-wrap"><canvas id="chartSubdivision"></canvas></div>
+  </div>
+
+  <div class="section-title">Code Enforcement Cases <span class="badge">Grass/Weed vs. All Other</span></div>
+  <div class="kpi-row" id="kpiCE"></div>
+  <div class="grid grid-2">
+    <div class="card">
+      <h3>Annual Cases by Type</h3>
+      <div class="chart-wrap"><canvas id="chartCEAnnual"></canvas></div>
+    </div>
+    <div class="card">
+      <h3>2026 Monthly Cases by Type</h3>
+      <div class="chart-wrap"><canvas id="chartCEMonthly"></canvas></div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Methodology note:</b> Department permit/revenue totals are pulled directly from OpenGov's built-in Analytics view, filtered by department (Building Standards Division, Engineering Department, Planning Division). These totals include <i>every</i> record type under each department, so they are broader than — and will not exactly match — the narrower "Total Permits / Total Revenue" figures in the separate Monthly Building Standards Division Report workbook (which draws from a specific subset of exported reports). Engineering Department monthly revenue figures do reconcile closely with that workbook (e.g. April $179,635.14, May $273,932.82). "New 2 &amp; 3 Family" and apartment-unit data only go back to early 2024 in OpenGov; no earlier history was available there. The 2012–2023 bars in the combined housing chart come from the City of Hilliard's public ClearGov Transparency Center ("Single Family and Multi-Family Units Permitted," cleargov.com/ohio/franklin/city/hilliard/dashboards/1122/building), which does not split multi-family permits into 2/3-family vs. larger apartment complexes for those years — hence the single "Multi-Family / Apartments" bucket pre-2024. 2024, 2025, and 2026 YTD bars use the OpenGov figures pulled directly above, which do split that category. Code Enforcement case counts reflect "Records Created" in OpenGov's Property Maintenance Complaints category, split into Grass/Weed Complaint vs. all other City of Hilliard Code Violation cases. The "2026 New Home Permits by Subdivision" chart totals all New Single Family and New 2 &amp; 3 Family building permits submitted Jan 1 – Jul 22, 2026, grouped by the Subdivision field on each permit. Permits where OpenGov's Subdivision field was left as "Other" (29 permits, all addressed on Addison Ln N/S) have been reclassified as Leap Rd Townhomes, the actual subdivision at that location; the 3 Tarlton West permits get their own bar; the remaining "Other" bucket is just the single one-off Eagle Pointe permit.
+  </div>
+</div>
+
+<footer>Built from live OpenGov data · City of Hilliard Permitting & Licensing</footer>
+
+<script>
+const fmtInt = n => n.toLocaleString('en-US');
+const fmtUSD = n => '$' + n.toLocaleString('en-US', {maximumFractionDigits:0});
+const fmtUSDk = n => '$' + (n/1000).toFixed(0) + 'k';
+const fmtUSDm = n => '$' + (n/1000000).toFixed(2) + 'M';
+
+const data = {
+  annual: {
+    "2024": {
+      "Building Standards": {permits: 1966, revenue: 1618194.15},
+      "Engineering": {permits: 1100, revenue: 5364961.52},
+      "Planning": {permits: 621, revenue: 124038.00}
+    },
+    "2025": {
+      "Building Standards": {permits: 1931, revenue: 1422457.54},
+      "Engineering": {permits: 1057, revenue: 2343246.23},
+      "Planning": {permits: 658, revenue: 120130.00}
+    },
+    "2026 YTD": {
+      "Building Standards": {permits: 1009, revenue: 865797.80},
+      "Engineering": {permits: 662, revenue: 1538910.72},
+      "Planning": {permits: 396, revenue: 85705.00}
+    }
+  },
+  homes: {
+    "2024": {singleFamily:158, twoThreeFamily:0},
+    "2025": {singleFamily:154, twoThreeFamily:1},
+    "2026 YTD": {singleFamily:84, twoThreeFamily:23}
+  },
+  apartments: {
+    "2024": {permits:10, units:288},
+    "2025": {permits:4, units:188},
+    "2026 YTD": {permits:0, units:0}
+  },
+  // Full history 2012-2026 YTD. 2012-2023 sourced from ClearGov's public "Single Family and
+  // Multi-Family Units Permitted" dashboard (cleargov.com Hilliard, OH Building dashboard) —
+  // ClearGov does not split multi-family into 2/3-family vs. apartment complexes for those years,
+  // so it's kept as one "Multi-Family / Apartments" bucket. 2024, 2025 and 2026 YTD use the
+  // OpenGov figures pulled directly above (singleFamily/twoThreeFamily/apartments.units), which
+  // OpenGov does split out.
+  housingHistory: {
+    years: ["2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026 YTD"],
+    singleFamily:      [32, 55, 114, 111, 69, 67, 81, 125, 268, 118, 96, 131, 158, 154, 84],
+    twoThreeFamily:    [0,  0,  0,   0,   0,  0,  0,  0,   0,   0,   0,  0,   0,   1,   23],
+    multiFamilyApts:   [21, 439,438, 279, 1075,302,0,  0,   0,   216, 4,  61,  288, 188, 0]
+  },
+  codeEnforcement: {
+    annual: {
+      "2022": {grass:176, other:290},
+      "2023": {grass:135, other:276},
+      "2024": {grass:126, other:164},
+      "2025": {grass:144, other:243},
+      "2026 YTD": {grass:127, other:159}
+    },
+    monthly2026: {
+      labels: ["Jan","Feb","Mar","Apr","May","Jun"],
+      grass: [0,0,0,46,38,34],
+      other: [16,16,20,21,33,37]
+    }
+  },
+  // New Single Family + New 2 & 3 Family building permits submitted Jan 1 - Jul 22, 2026,
+  // grouped by subdivision (from OpenGov "New Single, 2 & 3 Family" report, Subdivision column).
+  // The report's own "Other" subdivision value (29 permits, all on Addison Ln N/S) has been
+  // reclassified to Leap Rd Townhomes, since that's the actual subdivision at that location.
+  // Tarlton West's 3 permits get their own "Tarlton" bar; "Other" is now just the single
+  // one-off Eagle Pointe permit.
+  subdivision2026: {
+    labels: ["Alton Place","Carr Farms","Hill Farm I & II","Leap Rd Townhomes","Tarlton","Other"],
+    counts: [20, 33, 21, 29, 3, 1]
+  }
+};
+
+// compute 2026 YTD department totals as sums of monthly (already embedded above for annual, but recompute permits sum check)
+function sum(arr){return arr.reduce((a,b)=>a+b,0);}
+
+const deptColors = {"Building Standards":"#2f6fed","Engineering":"#17a2b8","Planning":"#f0a63d"};
+const years = ["2024","2025","2026 YTD"];
+const depts = ["Building Standards","Engineering","Planning"];
+
+// KPI cards - department totals (2026 YTD only, most current)
+const kpiDeptEl = document.getElementById('kpiDept');
+depts.forEach(d=>{
+  const y = data.annual["2026 YTD"][d];
+  const y25 = data.annual["2025"][d];
+  const div = document.createElement('div');
+  div.className='kpi';
+  div.innerHTML = `<div class="label">${d} <span class="pill ytd">2026 YTD</span></div>
+    <div class="value">${fmtInt(y.permits)} permits</div>
+    <div class="sub">${fmtUSD(y.revenue)} revenue · FY25 total: ${fmtInt(y25.permits)} permits</div>`;
+  kpiDeptEl.appendChild(div);
+});
+{
+  const totalPermitsYTD = depts.reduce((a,d)=>a+data.annual["2026 YTD"][d].permits,0);
+  const totalRevYTD = depts.reduce((a,d)=>a+data.annual["2026 YTD"][d].revenue,0);
+  const div = document.createElement('div');
+  div.className='kpi';
+  div.innerHTML = `<div class="label">All Departments <span class="pill ytd">2026 YTD</span></div>
+    <div class="value">${fmtInt(totalPermitsYTD)} permits</div>
+    <div class="sub">${fmtUSD(totalRevYTD)} total revenue</div>`;
+  kpiDeptEl.appendChild(div);
+}
+
+// Dept permits chart
+new Chart(document.getElementById('chartDeptPermits'), {
+  type:'bar',
+  data:{
+    labels:years,
+    datasets: depts.map(d=>({
+      label:d,
+      backgroundColor:deptColors[d],
+      data: years.map(y=>data.annual[y][d].permits)
+    }))
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'}},
+    scales:{y:{beginAtZero:true,title:{display:true,text:'Permits Issued'}}}}
+});
+
+// Dept revenue chart
+new Chart(document.getElementById('chartDeptRevenue'), {
+  type:'bar',
+  data:{
+    labels:years,
+    datasets: depts.map(d=>({
+      label:d,
+      backgroundColor:deptColors[d],
+      data: years.map(y=>data.annual[y][d].revenue)
+    }))
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtUSD(c.raw)}}},
+    scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtUSDm(v)},title:{display:true,text:'Revenue ($ Millions)'}}}}
+});
+
+// Detail table
+{
+  const tbl = document.getElementById('tblDept');
+  let html = '<thead><tr><th>Department</th>';
+  years.forEach(y=>html+=`<th>${y} Permits</th><th>${y} Revenue</th>`);
+  html += '</tr></thead><tbody>';
+  depts.forEach(d=>{
+    html += `<tr><td>${d}</td>`;
+    years.forEach(y=>{
+      const v = data.annual[y][d];
+      html += `<td>${fmtInt(v.permits)}</td><td>${fmtUSD(v.revenue)}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '<tr><td>Total</td>';
+  years.forEach(y=>{
+    const p = depts.reduce((a,d)=>a+data.annual[y][d].permits,0);
+    const r = depts.reduce((a,d)=>a+data.annual[y][d].revenue,0);
+    html += `<td>${fmtInt(p)}</td><td>${fmtUSD(r)}</td>`;
+  });
+  html += '</tr></tbody>';
+  tbl.innerHTML = html;
+}
+
+// Housing KPIs
+const kpiHousingEl = document.getElementById('kpiHousing');
+{
+  const y = data.homes["2026 YTD"];
+  const y25 = data.homes["2025"];
+  const a = data.apartments["2026 YTD"];
+  const a25 = data.apartments["2025"];
+  const items = [
+    {label:'New Single Family <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.singleFamily)}`},
+    {label:'New 2 &amp; 3 Family <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.twoThreeFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.twoThreeFamily)}`},
+    {label:'New Apartment Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(a.units)+' units', sub:`FY25 total: ${fmtInt(a25.units)} units (${a25.permits} permits)`},
+    {label:'Total New Housing Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily+y.twoThreeFamily+a.units)+' units', sub:'Single family + 2/3 family + apartments'}
+  ];
+  items.forEach(it=>{
+    const div = document.createElement('div');
+    div.className='kpi';
+    div.innerHTML = `<div class="label">${it.label}</div><div class="value">${it.value}</div><div class="sub">${it.sub}</div>`;
+    kpiHousingEl.appendChild(div);
+  });
+}
+
+// Combined stacked housing chart: Single Family + 2/3 Family + Multi-Family/Apartments, 2012-2026 YTD
+// (2012-2023 from ClearGov; 2024-2026 YTD from OpenGov — see housingHistory note above)
+const hh = data.housingHistory;
+
+// Scoped plugin: draws a "Total: N" label above each stacked bar (this chart only)
+const housingTotalsPlugin = {
+  id:'housingTotals',
+  afterDatasetsDraw(chart){
+    const {ctx} = chart;
+    hh.years.forEach((y, i)=>{
+      const total = hh.singleFamily[i] + hh.twoThreeFamily[i] + hh.multiFamilyApts[i];
+      const meta = chart.getDatasetMeta(2);
+      const bar = meta.data[i];
+      if (!bar) return;
+      ctx.save();
+      ctx.font = '700 13px -apple-system, sans-serif';
+      ctx.fillStyle = '#1b2a4a';
+      ctx.textAlign = 'center';
+      ctx.fillText(fmtInt(total), bar.x, bar.y - 10);
+      ctx.restore();
+    });
+  }
+};
+
+new Chart(document.getElementById('chartHousingCombined'), {
+  type:'bar',
+  data:{
+    labels: hh.years,
+    datasets:[
+      {label:'Single Family', backgroundColor:'#2f6fed', data: hh.singleFamily},
+      {label:'2 & 3 Family', backgroundColor:'#f0a63d', data: hh.twoThreeFamily},
+      {label:'Multi-Family / Apartments', backgroundColor:'#2f9e58', data: hh.multiFamilyApts}
+    ]
+  },
+  plugins:[housingTotalsPlugin],
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    layout:{padding:{top:22}},
+    plugins:{
+      legend:{position:'bottom'},
+      tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtInt(c.raw)}`}}
+    },
+    scales:{
+      x:{stacked:true, ticks:{maxRotation:45,minRotation:45,autoSkip:false,font:{size:11}}},
+      y:{stacked:true, beginAtZero:true, title:{display:true,text:'Units Permitted'}}
+    }
+  }
+});
+
+// Subdivision breakdown chart (2026 new home permits)
+const subdivColors = ['#2f6fed','#17a2b8','#f0a63d','#9b59b6','#2f9e58','#64748b'];
+
+// Scoped plugin: draws the permit count above each bar (replaces chartjs-plugin-datalabels,
+// which isn't available in this sandboxed view)
+const subdivLabelsPlugin = {
+  id:'subdivLabels',
+  afterDatasetsDraw(chart){
+    const {ctx} = chart;
+    const meta = chart.getDatasetMeta(0);
+    data.subdivision2026.counts.forEach((v,i)=>{
+      const bar = meta.data[i];
+      if (!bar) return;
+      ctx.save();
+      ctx.font = '700 12px -apple-system, sans-serif';
+      ctx.fillStyle = '#1b2a4a';
+      ctx.textAlign = 'center';
+      ctx.fillText(fmtInt(v), bar.x, bar.y - 8);
+      ctx.restore();
+    });
+  }
+};
+
+new Chart(document.getElementById('chartSubdivision'), {
+  type:'bar',
+  data:{
+    labels: data.subdivision2026.labels,
+    datasets:[{
+      label:'New Home Permits',
+      backgroundColor: subdivColors,
+      data: data.subdivision2026.counts
+    }]
+  },
+  plugins:[subdivLabelsPlugin],
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    layout:{padding:{top:20}},
+    plugins:{
+      legend:{display:false},
+      tooltip:{callbacks:{label:c=>`${fmtInt(c.raw)} permits`}}
+    },
+    scales:{y:{beginAtZero:true,title:{display:true,text:'New Home Permits (Single Family + 2/3 Family)'}}}
+  }
+});
+
+// Code enforcement KPIs
+const kpiCEEl = document.getElementById('kpiCE');
+{
+  const y = data.codeEnforcement.annual["2026 YTD"];
+  const y25 = data.codeEnforcement.annual["2025"];
+  const items = [
+    {label:'Grass/Weed Complaints <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.grass)+' cases', sub:`FY25 total: ${fmtInt(y25.grass)}`},
+    {label:'All Other Code Violations <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.other)+' cases', sub:`FY25 total: ${fmtInt(y25.other)}`},
+    {label:'Total Code Enforcement <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.grass+y.other)+' cases', sub:`FY25 total: ${fmtInt(y25.grass+y25.other)}`}
+  ];
+  items.forEach(it=>{
+    const div = document.createElement('div');
+    div.className='kpi';
+    div.innerHTML = `<div class="label">${it.label}</div><div class="value">${it.value}</div><div class="sub">${it.sub}</div>`;
+    kpiCEEl.appendChild(div);
+  });
+}
+
+// CE annual chart (2022-2026 YTD)
+const ceYears = ["2022","2023","2024","2025","2026 YTD"];
+new Chart(document.getElementById('chartCEAnnual'), {
+  type:'bar',
+  data:{
+    labels:ceYears,
+    datasets:[
+      {label:'Grass/Weed', backgroundColor:'#2f9e58', data: ceYears.map(y=>data.codeEnforcement.annual[y].grass)},
+      {label:'All Other Violations', backgroundColor:'#d9534f', data: ceYears.map(y=>data.codeEnforcement.annual[y].other)}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'}},
+    scales:{y:{beginAtZero:true,title:{display:true,text:'Cases'}},x:{stacked:false}}}
+});
+
+// CE monthly chart
+new Chart(document.getElementById('chartCEMonthly'), {
+  type:'bar',
+  data:{
+    labels: data.codeEnforcement.monthly2026.labels,
+    datasets:[
+      {label:'Grass/Weed', backgroundColor:'#2f9e58', data: data.codeEnforcement.monthly2026.grass},
+      {label:'All Other Violations', backgroundColor:'#d9534f', data: data.codeEnforcement.monthly2026.other}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'bottom'}},
+    scales:{y:{beginAtZero:true,title:{display:true,text:'Cases'}}}}
+});
+</script>
+</body>
+</html>
