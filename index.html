@@ -436,7 +436,7 @@ const kpiHousingEl = document.getElementById('kpiHousing');
   const a25 = data.apartments["2025"];
   const items = [
     {label:'New Single Family <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.singleFamily)}`},
-    {label:'New 2 &amp; 3 Family <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.twoThreeFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.twoThreeFamily)}`},
+    {label:'Shared Wall Townhomes <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.twoThreeFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.twoThreeFamily)}`},
     {label:'New Apartment Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(a.units)+' units', sub:`FY25 total: ${fmtInt(a25.units)} units (${a25.permits} permits)`},
     {label:'Total New Housing Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily+y.twoThreeFamily+a.units)+' units', sub:'Single family + 2/3 family + apartments · <b>25 permitted in the last 30 days</b> (Jul 28 – Aug 27)'}
   ];
