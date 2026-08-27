@@ -48,7 +48,7 @@
 
 <header>
   <h1>City of Hilliard, OH - Housing & Permitting Dashboard</h1>
-  <p>Source: OpenGov Permitting & Licensing (Explore → Reports / Analytics) · Data verified through August 19, 2026 · 2026 figures are Year-to-Date (Jan 1 – Aug 19)</p>
+  <p>Source: OpenGov Permitting & Licensing (Explore → Reports / Analytics) · Data verified through August 27, 2026 · 2026 figures are Year-to-Date (Jan 1 – Aug 27)</p>
 </header>
 
 <div class="container">
@@ -79,7 +79,7 @@
     <div class="chart-wrap" style="height:520px;"><canvas id="chartHousingCombined"></canvas></div>
   </div>
   <div class="card" style="margin-top:18px;">
-    <h3>2026 New Home Permits by Subdivision <span class="pill ytd">YTD thru Aug 19</span></h3>
+    <h3>2026 New Home Permits by Subdivision <span class="pill ytd">YTD thru Aug 27</span></h3>
     <div class="chart-wrap"><canvas id="chartSubdivision"></canvas></div>
   </div>
 
@@ -158,7 +158,7 @@
   </div>
 
   <div class="note">
-    <b>Methodology note:</b> Department permit/revenue totals are pulled directly from OpenGov's built-in Analytics view, filtered by department (Building Standards Division, Engineering Department, Planning Division). These totals include <i>every</i> record type under each department, so they are broader than — and will not exactly match — the narrower "Total Permits / Total Revenue" figures in the separate Monthly Building Standards Division Report workbook (which draws from a specific subset of exported reports). Engineering Department monthly revenue figures do reconcile closely with that workbook (e.g. April $179,635.14, May $273,932.82). "New 2 &amp; 3 Family" and apartment-unit data only go back to early 2024 in OpenGov; no earlier history was available there. The 2012–2023 bars in the combined housing chart come from the City of Hilliard's public ClearGov Transparency Center ("Single Family and Multi-Family Units Permitted," cleargov.com/ohio/franklin/city/hilliard/dashboards/1122/building), which does not split multi-family permits into 2/3-family vs. larger apartment complexes for those years — hence the single "Multi-Family / Apartments" bucket pre-2024. 2024, 2025, and 2026 YTD bars use the OpenGov figures pulled directly above, which do split that category. Code Enforcement case counts reflect "Records Created" in OpenGov's Property Maintenance Complaints category, split into Grass/Weed Complaint vs. all other City of Hilliard Code Violation cases (August is partial, through Aug 19). The "2026 New Home Permits by Subdivision" chart totals all New Single Family and New 2 &amp; 3 Family building permits submitted Jan 1 – Aug 19, 2026, grouped by the Subdivision field on each permit. Permits where OpenGov's Subdivision field was left as "Other" (38 permits, all addressed on Addison Ln N/S) have been reclassified as Leap Rd Townhomes, the actual subdivision at that location; the 3 Tarlton West permits get their own bar; the remaining "Other" bucket is just the single one-off Eagle Pointe permit. OpenGov now reports "Hill Farms" and "Hill Farm II" as separate subdivision values (previously combined here as one "Hill Farm I &amp; II" bar), so they get separate bars.
+    <b>Methodology note:</b> Department permit/revenue totals are pulled directly from OpenGov's built-in Analytics view, filtered by department (Building Standards Division, Engineering Department, Planning Division). These totals include <i>every</i> record type under each department, so they are broader than — and will not exactly match — the narrower "Total Permits / Total Revenue" figures in the separate Monthly Building Standards Division Report workbook (which draws from a specific subset of exported reports). Engineering Department monthly revenue figures do reconcile closely with that workbook (e.g. April $179,635.14, May $273,932.82). "New 2 &amp; 3 Family" and apartment-unit data only go back to early 2024 in OpenGov; no earlier history was available there. The 2012–2023 bars in the combined housing chart come from the City of Hilliard's public ClearGov Transparency Center ("Single Family and Multi-Family Units Permitted," cleargov.com/ohio/franklin/city/hilliard/dashboards/1122/building), which does not split multi-family permits into 2/3-family vs. larger apartment complexes for those years — hence the single "Multi-Family / Apartments" bucket pre-2024. 2024, 2025, and 2026 YTD bars use the OpenGov figures pulled directly above, which do split that category. Code Enforcement case counts reflect "Records Created" in OpenGov's Property Maintenance Complaints category, split into Grass/Weed Complaint vs. all other City of Hilliard Code Violation cases (August is partial, through Aug 27). The "2026 New Home Permits by Subdivision" chart totals all New Single Family and New 2 &amp; 3 Family building permits submitted Jan 1 – Aug 27, 2026, grouped by the Subdivision field on each permit. Permits where OpenGov's Subdivision field was left as "Other" (38 permits, all addressed on Addison Ln N/S) have been reclassified as Leap Rd Townhomes, the actual subdivision at that location; the 3 Tarlton West permits get their own bar; the remaining "Other" bucket is just the single one-off Eagle Pointe permit. OpenGov now reports "Hill Farms" and "Hill Farm II" as separate subdivision values (previously combined here as one "Hill Farm I &amp; II" bar), so they get separate bars.
   </div>
 </div>
 
@@ -183,15 +183,15 @@ const data = {
       "Planning": {permits: 658, revenue: 120130.00}
     },
     "2026 YTD": {
-      "Building Standards": {permits: 1162, revenue: 1033766.01},
-      "Engineering": {permits: 788, revenue: 1876787.70},
-      "Planning": {permits: 459, revenue: 102750.00}
+      "Building Standards": {permits: 1190, revenue: 1325800.71},
+      "Engineering": {permits: 823, revenue: 1907156.70},
+      "Planning": {permits: 475, revenue: 103760.00}
     }
   },
   homes: {
     "2024": {singleFamily:158, twoThreeFamily:0},
     "2025": {singleFamily:154, twoThreeFamily:1},
-    "2026 YTD": {singleFamily:107, twoThreeFamily:32}
+    "2026 YTD": {singleFamily:111, twoThreeFamily:32}
   },
   apartments: {
     "2024": {permits:10, units:288},
@@ -206,7 +206,7 @@ const data = {
   // OpenGov does split out.
   housingHistory: {
     years: ["2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026 YTD"],
-    singleFamily:      [32, 55, 114, 111, 69, 67, 81, 125, 268, 118, 96, 131, 158, 154, 107],
+    singleFamily:      [32, 55, 114, 111, 69, 67, 81, 125, 268, 118, 96, 131, 158, 154, 111],
     twoThreeFamily:    [0,  0,  0,   0,   0,  0,  0,  0,   0,   0,   0,  0,   0,   1,   32],
     multiFamilyApts:   [21, 439,438, 279, 1075,302,0,  0,   0,   216, 4,  61,  288, 188, 0]
   },
@@ -216,15 +216,15 @@ const data = {
       "2023": {grass:135, other:276},
       "2024": {grass:126, other:164},
       "2025": {grass:144, other:243},
-      "2026 YTD": {grass:146, other:176}
+      "2026 YTD": {grass:155, other:180}
     },
     monthly2026: {
       labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug*"],
-      grass: [0,0,0,46,38,34,18,10],
-      other: [16,16,20,21,33,37,20,13]
+      grass: [0,0,0,46,38,34,18,19],
+      other: [16,16,20,21,33,37,20,17]
     }
   },
-  // New Single Family + New 2 & 3 Family building permits submitted Jan 1 - Aug 19, 2026,
+  // New Single Family + New 2 & 3 Family building permits submitted Jan 1 - Aug 27, 2026,
   // grouped by subdivision (from OpenGov "New Single, 2 & 3 Family" report, Subdivision column).
   // The report's own "Other" subdivision value (38 permits, all on Addison Ln N/S) has been
   // reclassified to Leap Rd Townhomes, since that's the actual subdivision at that location.
@@ -232,7 +232,7 @@ const data = {
   // one-off Eagle Pointe permit.
   subdivision2026: {
     labels: ["Alton Place","Carr Farms","Hill Farm II","Hill Farms","Leap Rd Townhomes","Tarlton","Other"],
-    counts: [23, 35, 26, 13, 38, 3, 1]
+    counts: [26, 35, 27, 13, 38, 3, 1]
   },
   // ============================================================================
   // Housing Market & Affordability — sourced from the separate Hilliard Housing
@@ -438,7 +438,7 @@ const kpiHousingEl = document.getElementById('kpiHousing');
     {label:'New Single Family <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.singleFamily)}`},
     {label:'New 2 &amp; 3 Family <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.twoThreeFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.twoThreeFamily)}`},
     {label:'New Apartment Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(a.units)+' units', sub:`FY25 total: ${fmtInt(a25.units)} units (${a25.permits} permits)`},
-    {label:'Total New Housing Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily+y.twoThreeFamily+a.units)+' units', sub:'Single family + 2/3 family + apartments'}
+    {label:'Total New Housing Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily+y.twoThreeFamily+a.units)+' units', sub:'Single family + 2/3 family + apartments · <b>25 permitted in the last 30 days</b> (Jul 28 – Aug 27)'}
   ];
   items.forEach(it=>{
     const div = document.createElement('div');
