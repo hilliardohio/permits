@@ -158,7 +158,7 @@
   </div>
 
   <div class="note">
-    <b>Methodology note:</b> Department permit/revenue totals are pulled directly from OpenGov's built-in Analytics view, filtered by department (Building Standards Division, Engineering Department, Planning Division). These totals include <i>every</i> record type under each department, so they are broader than — and will not exactly match — the narrower "Total Permits / Total Revenue" figures in the separate Monthly Building Standards Division Report workbook (which draws from a specific subset of exported reports). Engineering Department monthly revenue figures do reconcile closely with that workbook (e.g. April $179,635.14, May $273,932.82). "New 2 &amp; 3 Family" and apartment-unit data only go back to early 2024 in OpenGov; no earlier history was available there. The 2012–2023 bars in the combined housing chart come from the City of Hilliard's public ClearGov Transparency Center ("Single Family and Multi-Family Units Permitted," cleargov.com/ohio/franklin/city/hilliard/dashboards/1122/building), which does not split multi-family permits into 2/3-family vs. larger apartment complexes for those years — hence the single "Multi-Family / Apartments" bucket pre-2024. 2024, 2025, and 2026 YTD bars use the OpenGov figures pulled directly above, which do split that category. Code Enforcement case counts reflect "Records Created" in OpenGov's Property Maintenance Complaints category, split into Grass/Weed Complaint vs. all other City of Hilliard Code Violation cases (August is partial, through Aug 27). The "2026 New Home Permits by Subdivision" chart totals all New Single Family and New 2 &amp; 3 Family building permits submitted Jan 1 – Aug 27, 2026, grouped by the Subdivision field on each permit. Permits where OpenGov's Subdivision field was left as "Other" (38 permits, all addressed on Addison Ln N/S) have been reclassified as Leap Rd Townhomes, the actual subdivision at that location; the 3 Tarlton West permits get their own bar; the remaining "Other" bucket is just the single one-off Eagle Pointe permit. OpenGov now reports "Hill Farms" and "Hill Farm II" as separate subdivision values (previously combined here as one "Hill Farm I &amp; II" bar), so they get separate bars.
+    <b>Methodology note:</b> Department permit/revenue totals are pulled directly from OpenGov's built-in Analytics view, filtered by department (Building Standards Division, Engineering Department, Planning Division). These totals include <i>every</i> record type under each department, so they are broader than — and will not exactly match — the narrower "Total Permits / Total Revenue" figures in the separate Monthly Building Standards Division Report workbook (which draws from a specific subset of exported reports). Engineering Department monthly revenue figures do reconcile closely with that workbook (e.g. April $179,635.14, May $273,932.82). "New 2 &amp; 3 Family" and apartment-unit data only go back to early 2024 in OpenGov; no earlier history was available there. The 2012–2023 bars in the combined housing chart come from the City of Hilliard's public ClearGov Transparency Center ("Single Family and Multi-Family Units Permitted," cleargov.com/ohio/franklin/city/hilliard/dashboards/1122/building), which does not split multi-family permits into 2/3-family vs. larger apartment complexes for those years — hence the single "Multi-Family / Apartments" bucket pre-2024. 2024, 2025, and 2026 YTD bars use the OpenGov figures pulled directly above, which do split that category. The dashed line on that chart is the 10-year average of total housing units permitted per year (single family + 2/3 family + multi-family/apartments) over the ten most recent full calendar years; the partial 2026 YTD bar is excluded from the average. Code Enforcement case counts reflect "Records Created" in OpenGov's Property Maintenance Complaints category, split into Grass/Weed Complaint vs. all other City of Hilliard Code Violation cases (August is partial, through Aug 27). The "2026 New Home Permits by Subdivision" chart totals all New Single Family and New 2 &amp; 3 Family building permits submitted Jan 1 – Aug 27, 2026, grouped by the Subdivision field on each permit. Permits where OpenGov's Subdivision field was left as "Other" (38 permits, all addressed on Addison Ln N/S) have been reclassified as Leap Rd Townhomes, the actual subdivision at that location; the 3 Tarlton West permits get their own bar; the remaining "Other" bucket is just the single one-off Eagle Pointe permit. OpenGov now reports "Hill Farms" and "Hill Farm II" as separate subdivision values (previously combined here as one "Hill Farm I &amp; II" bar), so they get separate bars.
   </div>
 </div>
 
@@ -472,6 +472,30 @@ const housingTotalsPlugin = {
   }
 };
 
+// 10-year average of total housing units per year: the ten most recent full calendar years
+// (partial "YTD" years are excluded). Recomputes automatically as years are added to housingHistory.
+const hhFullIdx = hh.years.map((y,i)=>i).filter(i=>!/YTD/i.test(hh.years[i])).slice(-10);
+const hhAvg10 = hhFullIdx.reduce((s,i)=>s + hh.singleFamily[i] + hh.twoThreeFamily[i] + hh.multiFamilyApts[i], 0) / hhFullIdx.length;
+const hhAvg10Label = `10-Year Average, ${hh.years[hhFullIdx[0]]}–${hh.years[hhFullIdx[hhFullIdx.length-1]]}: ${fmtInt(Math.round(hhAvg10))} units / yr`;
+
+// Scoped plugin: dashed horizontal line at the 10-year average, spanning the full chart area
+const housingAvgLinePlugin = {
+  id:'housingAvgLine',
+  afterDatasetsDraw(chart){
+    const {ctx, chartArea, scales} = chart;
+    const yPx = scales.y.getPixelForValue(hhAvg10);
+    ctx.save();
+    ctx.beginPath();
+    ctx.setLineDash([8,6]);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#d6336c';
+    ctx.moveTo(chartArea.left, yPx);
+    ctx.lineTo(chartArea.right, yPx);
+    ctx.stroke();
+    ctx.restore();
+  }
+};
+
 new Chart(document.getElementById('chartHousingCombined'), {
   type:'bar',
   data:{
@@ -482,12 +506,27 @@ new Chart(document.getElementById('chartHousingCombined'), {
       {label:'Multi-Family / Apartments', backgroundColor:'#2f9e58', data: hh.multiFamilyApts}
     ]
   },
-  plugins:[housingTotalsPlugin],
+  plugins:[housingAvgLinePlugin, housingTotalsPlugin],
   options:{
     responsive:true,maintainAspectRatio:false,
     layout:{padding:{top:22}},
     plugins:{
-      legend:{position:'bottom'},
+      legend:{
+        position:'bottom',
+        labels:{
+          usePointStyle:true,
+          generateLabels(chart){
+            const items = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+            items.forEach(it=>{ it.pointStyle = 'rect'; });
+            items.push({text: hhAvg10Label, pointStyle:'line', strokeStyle:'#d6336c', fillStyle:'#d6336c', lineWidth:2, lineDash:[5,4], hidden:false});
+            return items;
+          }
+        },
+        onClick(e, item, legend){
+          if (item.datasetIndex === undefined) return; // the average line is not a toggleable dataset
+          Chart.defaults.plugins.legend.onClick.call(this, e, item, legend);
+        }
+      },
       tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtInt(c.raw)}`}},
       datalabels:{display:false}
     },
