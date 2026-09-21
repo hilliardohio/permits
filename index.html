@@ -6,160 +6,160 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
 <style>
-  :root{
-    --navy:#1b2a4a; --blue:#2f6fed; --teal:#17a2b8; --amber:#f0a63d; --green:#2f9e58; --red:#d9534f;
-    --gray-bg:#f4f6f9; --card-bg:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--gray-bg);color:var(--text);}
-  header{background:linear-gradient(135deg,var(--navy),#2a3f6b);color:#fff;padding:28px 36px;}
-  header h1{margin:0 0 4px 0;font-size:24px;font-weight:700;}
-  header p{margin:0;color:#c7d2e8;font-size:14px;}
-  .container{max-width:1280px;margin:0 auto;padding:24px 32px 60px;}
-  .section-title{font-size:18px;font-weight:700;margin:36px 0 14px;color:var(--navy);display:flex;align-items:center;gap:8px;}
-  .section-title .badge{font-size:11px;font-weight:600;background:var(--blue);color:#fff;padding:3px 9px;border-radius:12px;}
-  .grid{display:grid;gap:18px;}
-  .grid-3{grid-template-columns:repeat(3,1fr);}
-  .grid-2{grid-template-columns:repeat(2,1fr);}
-  @media(max-width:900px){.grid-3,.grid-2{grid-template-columns:1fr;}}
-  .card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
-  .card h3{margin:0 0 12px;font-size:14px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
-  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px;}
-  @media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr);}}
-  .kpi{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
-  .kpi .label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;}
-  .kpi .value{font-size:24px;font-weight:700;color:var(--navy);margin-top:4px;}
-  .kpi .sub{font-size:12px;color:var(--muted);margin-top:2px;}
-  .chart-wrap{position:relative;height:280px;}
-  .chart-wrap.tall{height:320px;}
-  table{width:100%;border-collapse:collapse;font-size:13px;}
-  th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--border);}
-  th:first-child,td:first-child{text-align:left;}
-  thead th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.03em;}
-  tbody tr:last-child td{border-bottom:none;font-weight:700;background:#f8fafc;}
-  .note{font-size:12.5px;color:var(--muted);background:#fff7e6;border:1px solid #f4dfa8;border-radius:10px;padding:12px 16px;margin-top:28px;line-height:1.5;}
-  .note b{color:#8a5a00;}
-  .pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;}
-  .pill.ytd{background:#e6f4ff;color:#0958d9;}
-  footer{text-align:center;color:var(--muted);font-size:12px;padding:20px;}
+:root{
+--navy:#1b2a4a; --blue:#2f6fed; --teal:#17a2b8; --amber:#f0a63d; --green:#2f9e58; --red:#d9534f;
+--gray-bg:#f4f6f9; --card-bg:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--gray-bg);color:var(--text);}
+header{background:linear-gradient(135deg,var(--navy),#2a3f6b);color:#fff;padding:28px 36px;}
+header h1{margin:0 0 4px 0;font-size:24px;font-weight:700;}
+header p{margin:0;color:#c7d2e8;font-size:14px;}
+.container{max-width:1280px;margin:0 auto;padding:24px 32px 60px;}
+.section-title{font-size:18px;font-weight:700;margin:36px 0 14px;color:var(--navy);display:flex;align-items:center;gap:8px;}
+.section-title .badge{font-size:11px;font-weight:600;background:var(--blue);color:#fff;padding:3px 9px;border-radius:12px;}
+.grid{display:grid;gap:18px;}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+@media(max-width:900px){.grid-3,.grid-2{grid-template-columns:1fr;}}
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:18px 20px;box-shadow:0 1px 2px rgba(16,24,40,.04);}
+.card h3{margin:0 0 12px;font-size:14px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px;}
+@media(max-width:900px){.kpi-row{grid-template-columns:repeat(2,1fr);}}
+.kpi{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.kpi .label{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;}
+.kpi .value{font-size:24px;font-weight:700;color:var(--navy);margin-top:4px;}
+.kpi .sub{font-size:12px;color:var(--muted);margin-top:2px;}
+.chart-wrap{position:relative;height:280px;}
+.chart-wrap.tall{height:320px;}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--border);}
+th:first-child,td:first-child{text-align:left;}
+thead th{color:var(--muted);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.03em;}
+tbody tr:last-child td{border-bottom:none;font-weight:700;background:#f8fafc;}
+.note{font-size:12.5px;color:var(--muted);background:#fff7e6;border:1px solid #f4dfa8;border-radius:10px;padding:12px 16px;margin-top:28px;line-height:1.5;}
+.note b{color:#8a5a00;}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;margin-left:8px;}
+.pill.ytd{background:#e6f4ff;color:#0958d9;}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px;}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>City of Hilliard, OH - Housing & Permitting Dashboard</h1>
-  <p>Source: OpenGov Permitting & Licensing (Explore → Reports / Analytics) · Data verified through August 27, 2026 · 2026 figures are Year-to-Date (Jan 1 – Aug 27)</p>
+<h1>City of Hilliard, OH - Housing & Permitting Dashboard</h1>
+<p>Source: OpenGov Permitting & Licensing (Explore → Reports / Analytics) · Data verified through September 21, 2026 · 2026 figures are Year-to-Date (Jan 1 – Sep 21)</p>
 </header>
 
 <div class="container">
 
-  <div class="section-title">Total Permits & Revenue by Department <span class="badge">Annual + 2026 YTD</span></div>
-  <div class="kpi-row" id="kpiDept"></div>
+<div class="section-title">Total Permits & Revenue by Department <span class="badge">Annual + 2026 YTD</span></div>
+<div class="kpi-row" id="kpiDept"></div>
 
-  <div class="grid grid-2">
-    <div class="card">
-      <h3>Permits Issued by Department</h3>
-      <div class="chart-wrap"><canvas id="chartDeptPermits"></canvas></div>
-    </div>
-    <div class="card">
-      <h3>Revenue Collected by Department</h3>
-      <div class="chart-wrap"><canvas id="chartDeptRevenue"></canvas></div>
-    </div>
-  </div>
+<div class="grid grid-2">
+<div class="card">
+<h3>Permits Issued by Department</h3>
+<div class="chart-wrap"><canvas id="chartDeptPermits"></canvas></div>
+</div>
+<div class="card">
+<h3>Revenue Collected by Department</h3>
+<div class="chart-wrap"><canvas id="chartDeptRevenue"></canvas></div>
+</div>
+</div>
 
-  <div class="card" style="margin-top:18px;">
-    <h3>Detail — Permits & Revenue by Department</h3>
-    <table id="tblDept"></table>
-  </div>
+<div class="card" style="margin-top:18px;">
+<h3>Detail — Permits & Revenue by Department</h3>
+<table id="tblDept"></table>
+</div>
 
-  <div class="section-title">New Single Family Homes, 2–3 Family & Apartment Units <span class="badge">Annual + 2026 YTD</span></div>
-  <div class="kpi-row" id="kpiHousing"></div>
-  <div class="card">
-    <h3>New Homes & Apartment Units Permitted, by Year</h3>
-    <div class="chart-wrap" style="height:520px;"><canvas id="chartHousingCombined"></canvas></div>
-  </div>
-  <div class="card" style="margin-top:18px;">
-    <h3>2026 New Home Permits by Subdivision <span class="pill ytd">YTD thru Aug 27</span></h3>
-    <div class="chart-wrap"><canvas id="chartSubdivision"></canvas></div>
-  </div>
+<div class="section-title">New Single Family Homes, 2–3 Family & Apartment Units <span class="badge">Annual + 2026 YTD</span></div>
+<div class="kpi-row" id="kpiHousing"></div>
+<div class="card">
+<h3>New Homes & Apartment Units Permitted, by Year</h3>
+<div class="chart-wrap" style="height:520px;"><canvas id="chartHousingCombined"></canvas></div>
+</div>
+<div class="card" style="margin-top:18px;">
+<h3>2026 New Home Permits by Subdivision <span class="pill ytd">YTD thru Sep 21</span></h3>
+<div class="chart-wrap"><canvas id="chartSubdivision"></canvas></div>
+</div>
 
-  <div class="section-title">Housing Market & Affordability <span class="badge">Franklin County Auditor · Zillow · HUD</span></div>
-  <div class="kpi-row" id="kpiAfford"></div>
+<div class="section-title">Housing Market & Affordability <span class="badge">Franklin County Auditor · Zillow · HUD</span></div>
+<div class="kpi-row" id="kpiAfford"></div>
 
-  <div class="card">
-    <h3>Median Home Sale Price by Community</h3>
-    <div class="chart-wrap tall"><canvas id="chartAffordPrice"></canvas></div>
-  </div>
+<div class="card">
+<h3>Median Home Sale Price by Community</h3>
+<div class="chart-wrap tall"><canvas id="chartAffordPrice"></canvas></div>
+</div>
 
-  <div class="grid grid-2" style="margin-top:18px;">
-    <div class="card">
-      <h3>Income Needed to Buy the Median Hilliard Home</h3>
-      <div class="chart-wrap"><canvas id="chartAffordIncome"></canvas></div>
-    </div>
-    <div class="card">
-      <h3>Median Price per Square Foot</h3>
-      <div class="chart-wrap"><canvas id="chartAffordPpsf"></canvas></div>
-    </div>
-  </div>
+<div class="grid grid-2" style="margin-top:18px;">
+<div class="card">
+<h3>Income Needed to Buy the Median Hilliard Home</h3>
+<div class="chart-wrap"><canvas id="chartAffordIncome"></canvas></div>
+</div>
+<div class="card">
+<h3>Median Price per Square Foot</h3>
+<div class="chart-wrap"><canvas id="chartAffordPpsf"></canvas></div>
+</div>
+</div>
 
-  <div class="grid grid-2" style="margin-top:18px;">
-    <div class="card">
-      <h3>Typical Asking Rent (Zillow Observed Rent Index)</h3>
-      <div class="chart-wrap"><canvas id="chartAffordRent"></canvas></div>
-    </div>
-    <div class="card">
-      <h3>Hilliard Sale Prices by Home Type</h3>
-      <div class="chart-wrap"><canvas id="chartAffordType"></canvas></div>
-    </div>
-  </div>
+<div class="grid grid-2" style="margin-top:18px;">
+<div class="card">
+<h3>Typical Asking Rent (Zillow Observed Rent Index)</h3>
+<div class="chart-wrap"><canvas id="chartAffordRent"></canvas></div>
+</div>
+<div class="card">
+<h3>Hilliard Sale Prices by Home Type</h3>
+<div class="chart-wrap"><canvas id="chartAffordType"></canvas></div>
+</div>
+</div>
 
-  <div class="card" style="margin-top:18px;">
-    <h3>Latest Quarter at a Glance <span class="pill ytd">2026 Q1</span></h3>
-    <table id="tblAfford"></table>
-  </div>
+<div class="card" style="margin-top:18px;">
+<h3>Latest Quarter at a Glance <span class="pill ytd">2026 Q1</span></h3>
+<table id="tblAfford"></table>
+</div>
 
-  <div class="section-title" style="margin-top:36px;">Context: Who Lives Here & What's In the Housing Stock <span class="badge">ACS 5-Year Estimates</span></div>
-  <div class="grid grid-2">
-    <div class="card">
-      <h3>Median Household Income</h3>
-      <div class="chart-wrap"><canvas id="chartAcsIncome"></canvas></div>
-    </div>
-    <div class="card">
-      <h3>Renter Share of Households</h3>
-      <div class="chart-wrap"><canvas id="chartAcsRenter"></canvas></div>
-    </div>
-  </div>
-  <div class="grid grid-2" style="margin-top:18px;">
-    <div class="card">
-      <h3>Renters Spending 30%+ of Income on Housing</h3>
-      <div class="chart-wrap"><canvas id="chartAcsBurden"></canvas></div>
-    </div>
-    <div class="card">
-      <h3>Housing Stock by Structure Type</h3>
-      <div class="chart-wrap"><canvas id="chartAcsMix"></canvas></div>
-    </div>
-  </div>
+<div class="section-title" style="margin-top:36px;">Context: Who Lives Here & What's In the Housing Stock <span class="badge">ACS 5-Year Estimates</span></div>
+<div class="grid grid-2">
+<div class="card">
+<h3>Median Household Income</h3>
+<div class="chart-wrap"><canvas id="chartAcsIncome"></canvas></div>
+</div>
+<div class="card">
+<h3>Renter Share of Households</h3>
+<div class="chart-wrap"><canvas id="chartAcsRenter"></canvas></div>
+</div>
+</div>
+<div class="grid grid-2" style="margin-top:18px;">
+<div class="card">
+<h3>Renters Spending 30%+ of Income on Housing</h3>
+<div class="chart-wrap"><canvas id="chartAcsBurden"></canvas></div>
+</div>
+<div class="card">
+<h3>Housing Stock by Structure Type</h3>
+<div class="chart-wrap"><canvas id="chartAcsMix"></canvas></div>
+</div>
+</div>
 
-  <div class="note">
-    <b>Housing Market &amp; Affordability data source:</b> This section is pulled from the City's separate <a href="https://gabe-lade.github.io/swank-program/data/hilliard-housing-tracker.html" target="_blank" rel="noopener">Hilliard Housing Affordability Tracker</a> (gabe-lade.github.io/swank-program/data/hilliard-housing-tracker.html), snapshotted as of <b>2026 Q1</b>. Sale price, $/sq ft, and home-type figures come from Franklin County Auditor parcel and conveyance records aggregated quarterly by city staff; the "Income Needed" series is a modeled affordability index (10% down, prevailing 30-year mortgage rate, 1.8% effective property tax, $1,200/yr insurance, 0.4% PMI, 30% housing-cost-to-income standard) compared against the HUD Area Median Income for the Columbus metro; rent figures are the Zillow Observed Rent Index; the ACS context charts (household income, renter share, cost burden, housing stock mix) come from American Community Survey 5-year estimates and update annually. Per request, this dashboard omits three panels from the source tracker — the "Hilliard vs Franklin County Median" affordability-ratio KPI/chart, the Zillow typical home value (ZHVI) chart, and the "New Housing Units Permitted" chart (a placeholder in the source; this dashboard already shows real permit data above) — since they either duplicate other panels here or aren't yet backed by real data at the source. <b>To refresh this section, ask to update the Housing Market &amp; Affordability data from the Hilliard Housing Tracker</b> — the source URL above is re-read and the embedded chart data re-extracted each time.
-  </div>
+<div class="note">
+<b>Housing Market &amp; Affordability data source:</b> This section is pulled from the City's separate <a href="https://gabe-lade.github.io/swank-program/data/hilliard-housing-tracker.html" target="_blank" rel="noopener">Hilliard Housing Affordability Tracker</a> (gabe-lade.github.io/swank-program/data/hilliard-housing-tracker.html), snapshotted as of <b>2026 Q1</b>. Sale price, $/sq ft, and home-type figures come from Franklin County Auditor parcel and conveyance records aggregated quarterly by city staff; the "Income Needed" series is a modeled affordability index (10% down, prevailing 30-year mortgage rate, 1.8% effective property tax, $1,200/yr insurance, 0.4% PMI, 30% housing-cost-to-income standard) compared against the HUD Area Median Income for the Columbus metro; rent figures are the Zillow Observed Rent Index; the ACS context charts (household income, renter share, cost burden, housing stock mix) come from American Community Survey 5-year estimates and update annually. Per request, this dashboard omits three panels from the source tracker — the "Hilliard vs Franklin County Median" affordability-ratio KPI/chart, the Zillow typical home value (ZHVI) chart, and the "New Housing Units Permitted" chart (a placeholder in the source; this dashboard already shows real permit data above) — since they either duplicate other panels here or aren't yet backed by real data at the source. <b>To refresh this section, ask to update the Housing Market &amp; Affordability data from the Hilliard Housing Tracker</b> — the source URL above is re-read and the embedded chart data re-extracted each time.
+</div>
 
-  <div class="section-title">Code Enforcement Cases <span class="badge">Grass/Weed vs. All Other</span></div>
-  <div class="kpi-row" id="kpiCE"></div>
-  <div class="grid grid-2">
-    <div class="card">
-      <h3>Annual Cases by Type</h3>
-      <div class="chart-wrap"><canvas id="chartCEAnnual"></canvas></div>
-    </div>
-    <div class="card">
-      <h3>2026 Monthly Cases by Type</h3>
-      <div class="chart-wrap"><canvas id="chartCEMonthly"></canvas></div>
-    </div>
-  </div>
+<div class="section-title">Code Enforcement Cases <span class="badge">Grass/Weed vs. All Other</span></div>
+<div class="kpi-row" id="kpiCE"></div>
+<div class="grid grid-2">
+<div class="card">
+<h3>Annual Cases by Type</h3>
+<div class="chart-wrap"><canvas id="chartCEAnnual"></canvas></div>
+</div>
+<div class="card">
+<h3>2026 Monthly Cases by Type</h3>
+<div class="chart-wrap"><canvas id="chartCEMonthly"></canvas></div>
+</div>
+</div>
 
-  <div class="note">
-    <b>Methodology note:</b> Department permit/revenue totals are pulled directly from OpenGov's built-in Analytics view, filtered by department (Building Standards Division, Engineering Department, Planning Division). These totals include <i>every</i> record type under each department, so they are broader than — and will not exactly match — the narrower "Total Permits / Total Revenue" figures in the separate Monthly Building Standards Division Report workbook (which draws from a specific subset of exported reports). Engineering Department monthly revenue figures do reconcile closely with that workbook (e.g. April $179,635.14, May $273,932.82). "New 2 &amp; 3 Family" and apartment-unit data only go back to early 2024 in OpenGov; no earlier history was available there. The 2012–2023 bars in the combined housing chart come from the City of Hilliard's public ClearGov Transparency Center ("Single Family and Multi-Family Units Permitted," cleargov.com/ohio/franklin/city/hilliard/dashboards/1122/building), which does not split multi-family permits into 2/3-family vs. larger apartment complexes for those years — hence the single "Multi-Family / Apartments" bucket pre-2024. 2024, 2025, and 2026 YTD bars use the OpenGov figures pulled directly above, which do split that category. The dashed line on that chart is the 10-year average of total housing units permitted per year (single family + 2/3 family + multi-family/apartments) over the ten most recent full calendar years; the partial 2026 YTD bar is excluded from the average. Code Enforcement case counts reflect "Records Created" in OpenGov's Property Maintenance Complaints category, split into Grass/Weed Complaint vs. all other City of Hilliard Code Violation cases (August is partial, through Aug 27). The "2026 New Home Permits by Subdivision" chart totals all New Single Family and New 2 &amp; 3 Family building permits submitted Jan 1 – Aug 27, 2026, grouped by the Subdivision field on each permit. Permits where OpenGov's Subdivision field was left as "Other" (38 permits, all addressed on Addison Ln N/S) have been reclassified as Leap Rd Townhomes, the actual subdivision at that location; the 3 Tarlton West permits get their own bar; the remaining "Other" bucket is just the single one-off Eagle Pointe permit. OpenGov now reports "Hill Farms" and "Hill Farm II" as separate subdivision values (previously combined here as one "Hill Farm I &amp; II" bar), so they get separate bars.
-  </div>
+<div class="note">
+<b>Methodology note:</b> Department permit/revenue totals are pulled directly from OpenGov's built-in Analytics view, filtered by department (Building Standards Division, Engineering Department, Planning Division). Permit counts use OpenGov's "Permits Issued" total for each department (revenue uses "Revenue Collected"); these totals include <i>every</i> record type under each department, so they are broader than — and will not exactly match — the narrower "Total Permits / Total Revenue" figures in the separate Monthly Building Standards Division Report workbook (which draws from a specific subset of exported reports). Engineering Department monthly revenue figures do reconcile closely with that workbook (e.g. April $179,635.14, May $273,932.82). "New 2 &amp; 3 Family" and apartment-unit data only go back to early 2024 in OpenGov; no earlier history was available there. The 2012–2023 bars in the combined housing chart come from the City of Hilliard's public ClearGov Transparency Center ("Single Family and Multi-Family Units Permitted," cleargov.com/ohio/franklin/city/hilliard/dashboards/1122/building), which does not split multi-family permits into 2/3-family vs. larger apartment complexes for those years — hence the single "Multi-Family / Apartments" bucket pre-2024. 2024, 2025, and 2026 YTD bars use the OpenGov figures pulled directly above, which do split that category. The dashed line on that chart is the 10-year average of total housing units permitted per year (single family + 2/3 family + multi-family/apartments) over the ten most recent full calendar years; the partial 2026 YTD bar is excluded from the average. Code Enforcement case counts reflect "Records Created" in OpenGov's Property Maintenance Complaints category, split into Grass/Weed Complaint vs. all other City of Hilliard Code Violation cases (September is partial, through Sep 21). The "2026 New Home Permits by Subdivision" chart totals all New Single Family and New 2 &amp; 3 Family building permits submitted Jan 1 – Sep 21, 2026, grouped by the Subdivision field on each permit. Permits where OpenGov's Subdivision field was left as "Other" (38 permits, all addressed on Addison Ln N/S) have been reclassified as Leap Rd Townhomes, the actual subdivision at that location; the 3 Tarlton West permits get their own bar; the remaining "Other" bucket is just the single one-off Eagle Pointe permit. OpenGov reports "Hill Farms" and "Hill Farm II" as separate subdivision values, so they get separate bars.
+</div>
 </div>
 
 <footer>Built from live OpenGov data · City of Hilliard Permitting & Licensing</footer>
@@ -171,168 +171,168 @@ const fmtUSDk = n => '$' + (n/1000).toFixed(0) + 'k';
 const fmtUSDm = n => '$' + (n/1000000).toFixed(2) + 'M';
 
 const data = {
-  annual: {
-    "2024": {
-      "Building Standards": {permits: 1966, revenue: 1618194.15},
-      "Engineering": {permits: 1100, revenue: 5364961.52},
-      "Planning": {permits: 621, revenue: 124038.00}
-    },
-    "2025": {
-      "Building Standards": {permits: 1931, revenue: 1422457.54},
-      "Engineering": {permits: 1057, revenue: 2343246.23},
-      "Planning": {permits: 658, revenue: 120130.00}
-    },
-    "2026 YTD": {
-      "Building Standards": {permits: 1190, revenue: 1325800.71},
-      "Engineering": {permits: 823, revenue: 1907156.70},
-      "Planning": {permits: 475, revenue: 103760.00}
-    }
-  },
-  homes: {
-    "2024": {singleFamily:158, twoThreeFamily:0},
-    "2025": {singleFamily:154, twoThreeFamily:1},
-    "2026 YTD": {singleFamily:111, twoThreeFamily:32}
-  },
-  apartments: {
-    "2024": {permits:10, units:288},
-    "2025": {permits:4, units:188},
-    "2026 YTD": {permits:0, units:0}
-  },
-  // Full history 2012-2026 YTD. 2012-2023 sourced from ClearGov's public "Single Family and
-  // Multi-Family Units Permitted" dashboard (cleargov.com Hilliard, OH Building dashboard) —
-  // ClearGov does not split multi-family into 2/3-family vs. apartment complexes for those years,
-  // so it's kept as one "Multi-Family / Apartments" bucket. 2024, 2025 and 2026 YTD use the
-  // OpenGov figures pulled directly above (singleFamily/twoThreeFamily/apartments.units), which
-  // OpenGov does split out.
-  housingHistory: {
-    years: ["2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026 YTD"],
-    singleFamily:      [32, 55, 114, 111, 69, 67, 81, 125, 268, 118, 96, 131, 158, 154, 111],
-    twoThreeFamily:    [0,  0,  0,   0,   0,  0,  0,  0,   0,   0,   0,  0,   0,   1,   32],
-    multiFamilyApts:   [21, 439,438, 279, 1075,302,0,  0,   0,   216, 4,  61,  288, 188, 0]
-  },
-  codeEnforcement: {
-    annual: {
-      "2022": {grass:176, other:290},
-      "2023": {grass:135, other:276},
-      "2024": {grass:126, other:164},
-      "2025": {grass:144, other:243},
-      "2026 YTD": {grass:155, other:180}
-    },
-    monthly2026: {
-      labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug*"],
-      grass: [0,0,0,46,38,34,18,19],
-      other: [16,16,20,21,33,37,20,17]
-    }
-  },
-  // New Single Family + New 2 & 3 Family building permits submitted Jan 1 - Aug 27, 2026,
-  // grouped by subdivision (from OpenGov "New Single, 2 & 3 Family" report, Subdivision column).
-  // The report's own "Other" subdivision value (38 permits, all on Addison Ln N/S) has been
-  // reclassified to Leap Rd Townhomes, since that's the actual subdivision at that location.
-  // Tarlton West's 3 permits get their own "Tarlton" bar; "Other" is now just the single
-  // one-off Eagle Pointe permit.
-  subdivision2026: {
-    labels: ["Alton Place","Carr Farms","Hill Farm II","Hill Farms","Leap Rd Townhomes","Tarlton","Other"],
-    counts: [26, 35, 27, 13, 38, 3, 1]
-  },
-  // ============================================================================
-  // Housing Market & Affordability — sourced from the separate Hilliard Housing
-  // Affordability Tracker dashboard (city staff maintain it, updated quarterly for
-  // sales/rent/income-needed series and annually for the ACS context charts):
-  //   https://gabe-lade.github.io/swank-program/data/hilliard-housing-tracker.html
-  // To refresh: re-open that URL and re-extract its embedded Chart.js data (each
-  // chart's data is readable via Chart.getChart('<canvasId>').data in that page).
-  // Snapshot below is as of 2026 Q1. Three source panels are intentionally omitted
-  // (see the note in the HTML): "Hilliard vs Franklin County Median" ratio
-  // (KPI + chart), Zillow ZHVI chart, and the placeholder "New Housing Units
-  // Permitted" chart.
-  // ============================================================================
-  affordability: {
-    asOf: "2026 Q1",
-    kpis: {
-      medianPrice: {value: 386000, yoy: 0.016},
-      incomeNeeded: {value: 120000, ami: 112000},
-      pricePerSqft: {value: 223, yoy: 0.009},
-      typicalRent: {value: 1512, yoy: 0.011}
-    },
-    quarters: ["2020Q1","2020Q2","2020Q3","2020Q4","2021Q1","2021Q2","2021Q3","2021Q4","2022Q1","2022Q2","2022Q3","2022Q4","2023Q1","2023Q2","2023Q3","2023Q4","2024Q1","2024Q2","2024Q3","2024Q4","2025Q1","2025Q2","2025Q3","2025Q4","2026Q1"],
-    price: {
-      "Hilliard":        [337000,352500,316400,325300,327500,360000,375000,375700,400000,450000,442000,385100,420000,445000,493000,435400,415000,420000,413000,356000,380000,461200,428600,370000,386000],
-      "Dublin":          [400000,405000,425000,412500,413000,500000,470500,460000,458000,535000,535000,515500,545000,538500,500000,510000,597000,585400,580000,560000,572500,579600,626000,544000,612500],
-      "Gahanna":         [239900,235000,261300,256200,263000,269900,315000,315000,300000,350000,350000,325000,310000,360000,351200,322000,330000,380000,390000,356500,375000,412000,353800,339900,410000],
-      "Grove City":      [250000,252500,265000,280000,302500,303000,315000,321900,349300,371000,352500,383700,374000,378400,375000,394000,350000,355000,350000,349000,325900,370000,359900,340500,315000],
-      "Westerville":     [259200,285500,277000,295000,255000,317000,335000,318000,340000,355800,355000,363000,362500,380000,374000,375000,390000,395800,390000,420000,373000,415000,383700,392500,377000],
-      "Franklin County": [209400,229200,236000,232000,230000,259900,265000,262000,265000,299900,292500,279900,278700,311400,310000,305000,285500,310000,305000,295000,270200,299900,300000,279900,284900]
-    },
-    income: {
-      "Income needed (median Hilliard home)":     [82810,84468,74497,75292,76527,84490,86974,88658,100062,126058,127372,120818,128520,137403,158051,142808,130781,134834,127810,111737,120817,145890,134423,115709,119624],
-      "HUD Area Median Income (Columbus metro)":  [83800,83800,83800,83800,86900,86900,86900,86900,93700,93700,93700,93700,101100,101100,101100,101100,103300,103300,103300,103300,109000,109000,109000,109000,112000]
-    },
-    ppsf: {
-      "Hilliard":        [152,153,163,159,168,181,179,191,198,209,199,202,206,221,220,223,222,227,231,231,221,227,223,228,223],
-      "Dublin":          [159,163,167,169,176,186,188,188,198,218,210,206,204,233,246,236,223,240,243,247,247,245,251,237,246],
-      "Gahanna":         [142,152,150,159,159,182,181,179,192,204,200,191,204,204,222,204,214,220,216,219,223,228,215,217,217],
-      "Grove City":      [137,137,144,149,154,159,160,171,177,189,188,185,191,195,196,195,196,210,200,203,198,200,198,193,199],
-      "Westerville":     [145,146,154,163,169,179,178,176,181,203,200,193,209,208,215,217,226,223,217,219,225,232,219,221,228],
-      "Franklin County": [137,147,150,152,153,168,173,174,180,195,194,187,190,204,205,201,203,216,214,210,204,216,209,201,202]
-    },
-    rent: {
-      "Hilliard":        [null,null,null,null,1181,1247,1269,1267,1245,1341,1361,1333,1366,1411,1426,1375,1390,1484,1488,1463,1496,1526,1548,1521,1512],
-      "Dublin":          [1289,1297,1319,1316,1336,1423,1482,1438,1499,1604,1622,1523,1592,1650,1663,1610,1614,1686,1736,1692,1750,1788,1737,1700,1711],
-      "Gahanna":         [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1643,1717,1708,1657,1700],
-      "Grove City":      [null,null,null,null,null,1216,1267,1239,1267,1324,1342,1313,1364,1386,1395,1395,1447,1444,1461,1468,1475,1483,1488,1503,1532],
-      "Westerville":     [1155,1140,1165,1152,1170,1248,1274,1297,1302,1411,1397,1380,1386,1459,1472,1445,1478,1534,1550,1507,1581,1618,1598,1575,1583],
-      "Columbus metro":  [1107,1121,1137,1141,1165,1213,1245,1254,1274,1333,1358,1334,1356,1397,1407,1400,1410,1451,1469,1458,1482,1508,1508,1493,1507]
-    },
-    byType: {
-      "Single-family detached": [363300,361000,337400,358300,344200,385000,387400,405000,427500,456500,455000,435000,454000,479000,500000,463800,434500,454400,427000,370000,400000,495000,458500,390000,435000],
-      "Condo / townhome":       [230000,225000,269500,216500,265000,283500,280000,279000,312500,333000,313000,312500,310000,335000,295000,296000,345000,333000,339000,325000,280500,325000,376000,334000,310000]
-    },
-    latestQuarter: [
-      {community:"Hilliard",        sales:94,   price:386000, yoy:0.016,  ppsf:223, incomeNeeded:120000},
-      {community:"Dublin",          sales:77,   price:612500, yoy:0.070,  ppsf:246, incomeNeeded:187000},
-      {community:"Gahanna",         sales:72,   price:410000, yoy:0.093,  ppsf:217, incomeNeeded:127000},
-      {community:"Grove City",      sales:142,  price:315000, yoy:-0.033, ppsf:199, incomeNeeded:98000},
-      {community:"Westerville",     sales:74,   price:377000, yoy:0.011,  ppsf:228, incomeNeeded:117000},
-      {community:"Franklin County", sales:3245, price:284900, yoy:0.054,  ppsf:202, incomeNeeded:89000}
-    ]
-  },
-  acs: {
-    years: [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],
-    income: {
-      "Hilliard":        [88003,92727,95742,95831,96959,102283,106269,116287,122864,128189],
-      "Dublin":          [121020,125540,128916,135514,137867,138372,145828,158363,155282,160296],
-      "Gahanna":         [72863,73535,78854,84429,88475,89945,95547,104555,106004,109061],
-      "Grove City":      [66403,65277,68907,69479,74284,77865,82224,84765,90888,93161],
-      "Westerville":     [82121,85230,86466,90443,93717,92287,96279,103617,107054,109404],
-      "Franklin County": [52341,54037,56319,58762,61305,62352,65999,71070,73795,75176]
-    },
-    renterShare: {
-      "Hilliard":        [0.234,0.227,0.242,0.259,0.294,0.285,0.287,0.289,0.305,0.313],
-      "Dublin":          [0.223,0.243,0.231,0.229,0.239,0.242,0.228,0.232,0.229,0.229],
-      "Gahanna":         [0.263,0.285,0.28,0.266,0.262,0.275,0.292,0.296,0.305,0.294],
-      "Grove City":      [0.312,0.316,0.304,0.287,0.295,0.282,0.294,0.292,0.297,0.286],
-      "Westerville":     [0.254,0.234,0.224,0.226,0.224,0.223,0.232,0.247,0.256,0.275],
-      "Franklin County": [0.462,0.467,0.464,0.466,0.466,0.464,0.464,0.465,0.47,0.472]
-    },
-    burden: {
-      "Hilliard":        [0.419,0.422,0.392,0.463,0.463,0.422,0.375,0.364,0.362,0.342],
-      "Dublin":          [0.205,0.243,0.256,0.233,0.274,0.299,0.25,0.275,0.303,0.354],
-      "Gahanna":         [0.452,0.399,0.355,0.367,0.39,0.42,0.43,0.449,0.475,0.447],
-      "Grove City":      [0.431,0.423,0.409,0.415,0.413,0.356,0.357,0.394,0.424,0.438],
-      "Westerville":     [0.426,0.432,0.475,0.462,0.435,0.44,0.462,0.482,0.528,0.512],
-      "Franklin County": [0.47,0.46,0.456,0.451,0.441,0.43,0.428,0.435,0.447,0.463]
-    },
-    mix: {
-      cities: ["Hilliard","Dublin","Gahanna","Grove City","Westerville","Franklin County"],
-      categories: {
-        "Single-family detached":   {"Hilliard":64.2, "Dublin":68.5, "Gahanna":68.4, "Grove City":63.1, "Westerville":66.2, "Franklin County":52},
-        "Townhome / SF attached":   {"Hilliard":11.5, "Dublin":12.6, "Gahanna":10.3, "Grove City":13.4, "Westerville":9.4,  "Franklin County":9.9},
-        "2–4 unit buildings":       {"Hilliard":5.8,  "Dublin":4,    "Gahanna":6.5,  "Grove City":7.6,  "Westerville":7.6,  "Franklin County":10.8},
-        "5+ unit buildings":        {"Hilliard":18.3, "Dublin":14.3, "Gahanna":14.6, "Grove City":14.8, "Westerville":16.8, "Franklin County":26.2},
-        "Other / mobile":          {"Hilliard":0.2,  "Dublin":0.6,  "Gahanna":0.2,  "Grove City":1.1,  "Westerville":0,    "Franklin County":1.1}
-      }
-    }
-  }
+annual: {
+"2024": {
+"Building Standards": {permits: 1966, revenue: 1618194.15},
+"Engineering": {permits: 1100, revenue: 5364961.52},
+"Planning": {permits: 621, revenue: 124038.00}
+},
+"2025": {
+"Building Standards": {permits: 1931, revenue: 1422457.54},
+"Engineering": {permits: 1057, revenue: 2343246.23},
+"Planning": {permits: 658, revenue: 120130.00}
+},
+"2026 YTD": {
+"Building Standards": {permits: 1284, revenue: 1409405.84},
+"Engineering": {permits: 878, revenue: 2213680.90},
+"Planning": {permits: 527, revenue: 112650.00}
+}
+},
+homes: {
+"2024": {singleFamily:158, twoThreeFamily:0},
+"2025": {singleFamily:154, twoThreeFamily:1},
+"2026 YTD": {singleFamily:120, twoThreeFamily:32}
+},
+apartments: {
+"2024": {permits:10, units:288},
+"2025": {permits:4, units:188},
+"2026 YTD": {permits:0, units:0}
+},
+// Full history 2012-2026 YTD. 2012-2023 sourced from ClearGov's public "Single Family and
+// Multi-Family Units Permitted" dashboard (cleargov.com Hilliard, OH Building dashboard) —
+// ClearGov does not split multi-family into 2/3-family vs. apartment complexes for those years,
+// so it's kept as one "Multi-Family / Apartments" bucket. 2024, 2025 and 2026 YTD use the
+// OpenGov figures pulled directly above (singleFamily/twoThreeFamily/apartments.units), which
+// OpenGov does split out.
+housingHistory: {
+years: ["2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","2026 YTD"],
+singleFamily: [32, 55, 114, 111, 69, 67, 81, 125, 268, 118, 96, 131, 158, 154, 120],
+twoThreeFamily: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 32],
+multiFamilyApts: [21, 439,438, 279, 1075,302,0, 0, 0, 216, 4, 61, 288, 188, 0]
+},
+codeEnforcement: {
+annual: {
+"2022": {grass:176, other:290},
+"2023": {grass:135, other:276},
+"2024": {grass:126, other:164},
+"2025": {grass:144, other:243},
+"2026 YTD": {grass:167, other:194}
+},
+monthly2026: {
+labels: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep*"],
+grass: [0,0,0,46,38,34,18,20,11],
+other: [16,16,20,21,33,37,20,18,13]
+}
+},
+// New Single Family + New 2 & 3 Family building permits submitted Jan 1 - Sep 21, 2026,
+// grouped by subdivision (from OpenGov "New Single, 2 & 3 Family" report, Subdivision column).
+// The report's own "Other" subdivision value (38 permits, all on Addison Ln N/S) has been
+// reclassified to Leap Rd Townhomes, since that's the actual subdivision at that location.
+// Tarlton West's 3 permits get their own "Tarlton" bar; "Other" is now just the single
+// one-off Eagle Pointe permit.
+subdivision2026: {
+labels: ["Alton Place","Carr Farms","Hill Farm II","Hill Farms","Leap Rd Townhomes","Tarlton","Other"],
+counts: [27, 38, 30, 15, 38, 3, 1]
+},
+// ============================================================================
+// Housing Market & Affordability — sourced from the separate Hilliard Housing
+// Affordability Tracker dashboard (city staff maintain it, updated quarterly for
+// sales/rent/income-needed series and annually for the ACS context charts):
+// https://gabe-lade.github.io/swank-program/data/hilliard-housing-tracker.html
+// To refresh: re-open that URL and re-extract its embedded Chart.js data (each
+// chart's data is readable via Chart.getChart('<canvasId>').data in that page).
+// Snapshot below is as of 2026 Q1. Three source panels are intentionally omitted
+// (see the note in the HTML): "Hilliard vs Franklin County Median" ratio
+// (KPI + chart), Zillow ZHVI chart, and the placeholder "New Housing Units
+// Permitted" chart.
+// ============================================================================
+affordability: {
+asOf: "2026 Q1",
+kpis: {
+medianPrice: {value: 386000, yoy: 0.016},
+incomeNeeded: {value: 120000, ami: 112000},
+pricePerSqft: {value: 223, yoy: 0.009},
+typicalRent: {value: 1512, yoy: 0.011}
+},
+quarters: ["2020Q1","2020Q2","2020Q3","2020Q4","2021Q1","2021Q2","2021Q3","2021Q4","2022Q1","2022Q2","2022Q3","2022Q4","2023Q1","2023Q2","2023Q3","2023Q4","2024Q1","2024Q2","2024Q3","2024Q4","2025Q1","2025Q2","2025Q3","2025Q4","2026Q1"],
+price: {
+"Hilliard": [337000,352500,316400,325300,327500,360000,375000,375700,400000,450000,442000,385100,420000,445000,493000,435400,415000,420000,413000,356000,380000,461200,428600,370000,386000],
+"Dublin": [400000,405000,425000,412500,413000,500000,470500,460000,458000,535000,535000,515500,545000,538500,500000,510000,597000,585400,580000,560000,572500,579600,626000,544000,612500],
+"Gahanna": [239900,235000,261300,256200,263000,269900,315000,315000,300000,350000,350000,325000,310000,360000,351200,322000,330000,380000,390000,356500,375000,412000,353800,339900,410000],
+"Grove City": [250000,252500,265000,280000,302500,303000,315000,321900,349300,371000,352500,383700,374000,378400,375000,394000,350000,355000,350000,349000,325900,370000,359900,340500,315000],
+"Westerville": [259200,285500,277000,295000,255000,317000,335000,318000,340000,355800,355000,363000,362500,380000,374000,375000,390000,395800,390000,420000,373000,415000,383700,392500,377000],
+"Franklin County": [209400,229200,236000,232000,230000,259900,265000,262000,265000,299900,292500,279900,278700,311400,310000,305000,285500,310000,305000,295000,270200,299900,300000,279900,284900]
+},
+income: {
+"Income needed (median Hilliard home)": [82810,84468,74497,75292,76527,84490,86974,88658,100062,126058,127372,120818,128520,137403,158051,142808,130781,134834,127810,111737,120817,145890,134423,115709,119624],
+"HUD Area Median Income (Columbus metro)": [83800,83800,83800,83800,86900,86900,86900,86900,93700,93700,93700,93700,101100,101100,101100,101100,103300,103300,103300,103300,109000,109000,109000,109000,112000]
+},
+ppsf: {
+"Hilliard": [152,153,163,159,168,181,179,191,198,209,199,202,206,221,220,223,222,227,231,231,221,227,223,228,223],
+"Dublin": [159,163,167,169,176,186,188,188,198,218,210,206,204,233,246,236,223,240,243,247,247,245,251,237,246],
+"Gahanna": [142,152,150,159,159,182,181,179,192,204,200,191,204,204,222,204,214,220,216,219,223,228,215,217,217],
+"Grove City": [137,137,144,149,154,159,160,171,177,189,188,185,191,195,196,195,196,210,200,203,198,200,198,193,199],
+"Westerville": [145,146,154,163,169,179,178,176,181,203,200,193,209,208,215,217,226,223,217,219,225,232,219,221,228],
+"Franklin County": [137,147,150,152,153,168,173,174,180,195,194,187,190,204,205,201,203,216,214,210,204,216,209,201,202]
+},
+rent: {
+"Hilliard": [null,null,null,null,1181,1247,1269,1267,1245,1341,1361,1333,1366,1411,1426,1375,1390,1484,1488,1463,1496,1526,1548,1521,1512],
+"Dublin": [1289,1297,1319,1316,1336,1423,1482,1438,1499,1604,1622,1523,1592,1650,1663,1610,1614,1686,1736,1692,1750,1788,1737,1700,1711],
+"Gahanna": [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,1643,1717,1708,1657,1700],
+"Grove City": [null,null,null,null,null,1216,1267,1239,1267,1324,1342,1313,1364,1386,1395,1395,1447,1444,1461,1468,1475,1483,1488,1503,1532],
+"Westerville": [1155,1140,1165,1152,1170,1248,1274,1297,1302,1411,1397,1380,1386,1459,1472,1445,1478,1534,1550,1507,1581,1618,1598,1575,1583],
+"Columbus metro": [1107,1121,1137,1141,1165,1213,1245,1254,1274,1333,1358,1334,1356,1397,1407,1400,1410,1451,1469,1458,1482,1508,1508,1493,1507]
+},
+byType: {
+"Single-family detached": [363300,361000,337400,358300,344200,385000,387400,405000,427500,456500,455000,435000,454000,479000,500000,463800,434500,454400,427000,370000,400000,495000,458500,390000,435000],
+"Condo / townhome": [230000,225000,269500,216500,265000,283500,280000,279000,312500,333000,313000,312500,310000,335000,295000,296000,345000,333000,339000,325000,280500,325000,376000,334000,310000]
+},
+latestQuarter: [
+{community:"Hilliard", sales:94, price:386000, yoy:0.016, ppsf:223, incomeNeeded:120000},
+{community:"Dublin", sales:77, price:612500, yoy:0.070, ppsf:246, incomeNeeded:187000},
+{community:"Gahanna", sales:72, price:410000, yoy:0.093, ppsf:217, incomeNeeded:127000},
+{community:"Grove City", sales:142, price:315000, yoy:-0.033, ppsf:199, incomeNeeded:98000},
+{community:"Westerville", sales:74, price:377000, yoy:0.011, ppsf:228, incomeNeeded:117000},
+{community:"Franklin County", sales:3245, price:284900, yoy:0.054, ppsf:202, incomeNeeded:89000}
+]
+},
+acs: {
+years: [2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],
+income: {
+"Hilliard": [88003,92727,95742,95831,96959,102283,106269,116287,122864,128189],
+"Dublin": [121020,125540,128916,135514,137867,138372,145828,158363,155282,160296],
+"Gahanna": [72863,73535,78854,84429,88475,89945,95547,104555,106004,109061],
+"Grove City": [66403,65277,68907,69479,74284,77865,82224,84765,90888,93161],
+"Westerville": [82121,85230,86466,90443,93717,92287,96279,103617,107054,109404],
+"Franklin County": [52341,54037,56319,58762,61305,62352,65999,71070,73795,75176]
+},
+renterShare: {
+"Hilliard": [0.234,0.227,0.242,0.259,0.294,0.285,0.287,0.289,0.305,0.313],
+"Dublin": [0.223,0.243,0.231,0.229,0.239,0.242,0.228,0.232,0.229,0.229],
+"Gahanna": [0.263,0.285,0.28,0.266,0.262,0.275,0.292,0.296,0.305,0.294],
+"Grove City": [0.312,0.316,0.304,0.287,0.295,0.282,0.294,0.292,0.297,0.286],
+"Westerville": [0.254,0.234,0.224,0.226,0.224,0.223,0.232,0.247,0.256,0.275],
+"Franklin County": [0.462,0.467,0.464,0.466,0.466,0.464,0.464,0.465,0.47,0.472]
+},
+burden: {
+"Hilliard": [0.419,0.422,0.392,0.463,0.463,0.422,0.375,0.364,0.362,0.342],
+"Dublin": [0.205,0.243,0.256,0.233,0.274,0.299,0.25,0.275,0.303,0.354],
+"Gahanna": [0.452,0.399,0.355,0.367,0.39,0.42,0.43,0.449,0.475,0.447],
+"Grove City": [0.431,0.423,0.409,0.415,0.413,0.356,0.357,0.394,0.424,0.438],
+"Westerville": [0.426,0.432,0.475,0.462,0.435,0.44,0.462,0.482,0.528,0.512],
+"Franklin County": [0.47,0.46,0.456,0.451,0.441,0.43,0.428,0.435,0.447,0.463]
+},
+mix: {
+cities: ["Hilliard","Dublin","Gahanna","Grove City","Westerville","Franklin County"],
+categories: {
+"Single-family detached": {"Hilliard":64.2, "Dublin":68.5, "Gahanna":68.4, "Grove City":63.1, "Westerville":66.2, "Franklin County":52},
+"Townhome / SF attached": {"Hilliard":11.5, "Dublin":12.6, "Gahanna":10.3, "Grove City":13.4, "Westerville":9.4, "Franklin County":9.9},
+"2–4 unit buildings": {"Hilliard":5.8, "Dublin":4, "Gahanna":6.5, "Grove City":7.6, "Westerville":7.6, "Franklin County":10.8},
+"5+ unit buildings": {"Hilliard":18.3, "Dublin":14.3, "Gahanna":14.6, "Grove City":14.8, "Westerville":16.8, "Franklin County":26.2},
+"Other / mobile": {"Hilliard":0.2, "Dublin":0.6, "Gahanna":0.2, "Grove City":1.1, "Westerville":0, "Franklin County":1.1}
+}
+}
+}
 };
 
 // compute 2026 YTD department totals as sums of monthly (already embedded above for annual, but recompute permits sum check)
@@ -349,103 +349,103 @@ if (window.ChartDataLabels) { Chart.register(ChartDataLabels); }
 // KPI cards - department totals (2026 YTD only, most current)
 const kpiDeptEl = document.getElementById('kpiDept');
 depts.forEach(d=>{
-  const y = data.annual["2026 YTD"][d];
-  const y25 = data.annual["2025"][d];
-  const div = document.createElement('div');
-  div.className='kpi';
-  div.innerHTML = `<div class="label">${d} <span class="pill ytd">2026 YTD</span></div>
-    <div class="value">${fmtInt(y.permits)} permits</div>
-    <div class="sub">${fmtUSD(y.revenue)} revenue · FY25 total: ${fmtInt(y25.permits)} permits</div>`;
-  kpiDeptEl.appendChild(div);
+const y = data.annual["2026 YTD"][d];
+const y25 = data.annual["2025"][d];
+const div = document.createElement('div');
+div.className='kpi';
+div.innerHTML = `<div class="label">${d} <span class="pill ytd">2026 YTD</span></div>
+<div class="value">${fmtInt(y.permits)} permits</div>
+<div class="sub">${fmtUSD(y.revenue)} revenue · FY25 total: ${fmtInt(y25.permits)} permits</div>`;
+kpiDeptEl.appendChild(div);
 });
 {
-  const totalPermitsYTD = depts.reduce((a,d)=>a+data.annual["2026 YTD"][d].permits,0);
-  const totalRevYTD = depts.reduce((a,d)=>a+data.annual["2026 YTD"][d].revenue,0);
-  const div = document.createElement('div');
-  div.className='kpi';
-  div.innerHTML = `<div class="label">All Departments <span class="pill ytd">2026 YTD</span></div>
-    <div class="value">${fmtInt(totalPermitsYTD)} permits</div>
-    <div class="sub">${fmtUSD(totalRevYTD)} total revenue</div>`;
-  kpiDeptEl.appendChild(div);
+const totalPermitsYTD = depts.reduce((a,d)=>a+data.annual["2026 YTD"][d].permits,0);
+const totalRevYTD = depts.reduce((a,d)=>a+data.annual["2026 YTD"][d].revenue,0);
+const div = document.createElement('div');
+div.className='kpi';
+div.innerHTML = `<div class="label">All Departments <span class="pill ytd">2026 YTD</span></div>
+<div class="value">${fmtInt(totalPermitsYTD)} permits</div>
+<div class="sub">${fmtUSD(totalRevYTD)} total revenue</div>`;
+kpiDeptEl.appendChild(div);
 }
 
 // Dept permits chart
 new Chart(document.getElementById('chartDeptPermits'), {
-  type:'bar',
-  data:{
-    labels:years,
-    datasets: depts.map(d=>({
-      label:d,
-      backgroundColor:deptColors[d],
-      data: years.map(y=>data.annual[y][d].permits)
-    }))
-  },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'},datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,title:{display:true,text:'Permits Issued'}}}}
+type:'bar',
+data:{
+labels:years,
+datasets: depts.map(d=>({
+label:d,
+backgroundColor:deptColors[d],
+data: years.map(y=>data.annual[y][d].permits)
+}))
+},
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'},datalabels:{display:false}},
+scales:{y:{beginAtZero:true,title:{display:true,text:'Permits Issued'}}}}
 });
 
 // Dept revenue chart
 new Chart(document.getElementById('chartDeptRevenue'), {
-  type:'bar',
-  data:{
-    labels:years,
-    datasets: depts.map(d=>({
-      label:d,
-      backgroundColor:deptColors[d],
-      data: years.map(y=>data.annual[y][d].revenue)
-    }))
-  },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'},
-      tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtUSD(c.raw)}},
-      datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtUSDm(v)},title:{display:true,text:'Revenue ($ Millions)'}}}}
+type:'bar',
+data:{
+labels:years,
+datasets: depts.map(d=>({
+label:d,
+backgroundColor:deptColors[d],
+data: years.map(y=>data.annual[y][d].revenue)
+}))
+},
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'},
+tooltip:{callbacks:{label:c=>c.dataset.label+': '+fmtUSD(c.raw)}},
+datalabels:{display:false}},
+scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtUSDm(v)},title:{display:true,text:'Revenue ($ Millions)'}}}}
 });
 
 // Detail table
 {
-  const tbl = document.getElementById('tblDept');
-  let html = '<thead><tr><th>Department</th>';
-  years.forEach(y=>html+=`<th>${y} Permits</th><th>${y} Revenue</th>`);
-  html += '</tr></thead><tbody>';
-  depts.forEach(d=>{
-    html += `<tr><td>${d}</td>`;
-    years.forEach(y=>{
-      const v = data.annual[y][d];
-      html += `<td>${fmtInt(v.permits)}</td><td>${fmtUSD(v.revenue)}</td>`;
-    });
-    html += '</tr>';
-  });
-  html += '<tr><td>Total</td>';
-  years.forEach(y=>{
-    const p = depts.reduce((a,d)=>a+data.annual[y][d].permits,0);
-    const r = depts.reduce((a,d)=>a+data.annual[y][d].revenue,0);
-    html += `<td>${fmtInt(p)}</td><td>${fmtUSD(r)}</td>`;
-  });
-  html += '</tr></tbody>';
-  tbl.innerHTML = html;
+const tbl = document.getElementById('tblDept');
+let html = '<thead><tr><th>Department</th>';
+years.forEach(y=>html+=`<th>${y} Permits</th><th>${y} Revenue</th>`);
+html += '</tr></thead><tbody>';
+depts.forEach(d=>{
+html += `<tr><td>${d}</td>`;
+years.forEach(y=>{
+const v = data.annual[y][d];
+html += `<td>${fmtInt(v.permits)}</td><td>${fmtUSD(v.revenue)}</td>`;
+});
+html += '</tr>';
+});
+html += '<tr><td>Total</td>';
+years.forEach(y=>{
+const p = depts.reduce((a,d)=>a+data.annual[y][d].permits,0);
+const r = depts.reduce((a,d)=>a+data.annual[y][d].revenue,0);
+html += `<td>${fmtInt(p)}</td><td>${fmtUSD(r)}</td>`;
+});
+html += '</tr></tbody>';
+tbl.innerHTML = html;
 }
 
 // Housing KPIs
 const kpiHousingEl = document.getElementById('kpiHousing');
 {
-  const y = data.homes["2026 YTD"];
-  const y25 = data.homes["2025"];
-  const a = data.apartments["2026 YTD"];
-  const a25 = data.apartments["2025"];
-  const items = [
-    {label:'New Single Family <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.singleFamily)}`},
-    {label:'Shared Wall Townhomes <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.twoThreeFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.twoThreeFamily)}`},
-    {label:'New Apartment Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(a.units)+' units', sub:`FY25 total: ${fmtInt(a25.units)} units (${a25.permits} permits)`},
-    {label:'Total New Housing Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily+y.twoThreeFamily+a.units)+' units', sub:'Single family + 2/3 family + apartments · <b>25 permitted in the last 30 days</b> (Jul 28 – Aug 27)'}
-  ];
-  items.forEach(it=>{
-    const div = document.createElement('div');
-    div.className='kpi';
-    div.innerHTML = `<div class="label">${it.label}</div><div class="value">${it.value}</div><div class="sub">${it.sub}</div>`;
-    kpiHousingEl.appendChild(div);
-  });
+const y = data.homes["2026 YTD"];
+const y25 = data.homes["2025"];
+const a = data.apartments["2026 YTD"];
+const a25 = data.apartments["2025"];
+const items = [
+{label:'New Single Family <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.singleFamily)}`},
+{label:'Shared Wall Townhomes <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.twoThreeFamily)+' homes', sub:`FY25 total: ${fmtInt(y25.twoThreeFamily)}`},
+{label:'New Apartment Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(a.units)+' units', sub:`FY25 total: ${fmtInt(a25.units)} units (${a25.permits} permits)`},
+{label:'Total New Housing Units <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.singleFamily+y.twoThreeFamily+a.units)+' units', sub:'Single family + 2/3 family + apartments · <b>12 permitted in the last 30 days</b> (Aug 22 – Sep 21)'}
+];
+items.forEach(it=>{
+const div = document.createElement('div');
+div.className='kpi';
+div.innerHTML = `<div class="label">${it.label}</div><div class="value">${it.value}</div><div class="sub">${it.sub}</div>`;
+kpiHousingEl.appendChild(div);
+});
 }
 
 // Combined stacked housing chart: Single Family + 2/3 Family + Multi-Family/Apartments, 2012-2026 YTD
@@ -454,22 +454,22 @@ const hh = data.housingHistory;
 
 // Scoped plugin: draws a "Total: N" label above each stacked bar (this chart only)
 const housingTotalsPlugin = {
-  id:'housingTotals',
-  afterDatasetsDraw(chart){
-    const {ctx} = chart;
-    hh.years.forEach((y, i)=>{
-      const total = hh.singleFamily[i] + hh.twoThreeFamily[i] + hh.multiFamilyApts[i];
-      const meta = chart.getDatasetMeta(2);
-      const bar = meta.data[i];
-      if (!bar) return;
-      ctx.save();
-      ctx.font = '700 13px -apple-system, sans-serif';
-      ctx.fillStyle = '#1b2a4a';
-      ctx.textAlign = 'center';
-      ctx.fillText(fmtInt(total), bar.x, bar.y - 10);
-      ctx.restore();
-    });
-  }
+id:'housingTotals',
+afterDatasetsDraw(chart){
+const {ctx} = chart;
+hh.years.forEach((y, i)=>{
+const total = hh.singleFamily[i] + hh.twoThreeFamily[i] + hh.multiFamilyApts[i];
+const meta = chart.getDatasetMeta(2);
+const bar = meta.data[i];
+if (!bar) return;
+ctx.save();
+ctx.font = '700 13px -apple-system, sans-serif';
+ctx.fillStyle = '#1b2a4a';
+ctx.textAlign = 'center';
+ctx.fillText(fmtInt(total), bar.x, bar.y - 10);
+ctx.restore();
+});
+}
 };
 
 // 10-year average of total housing units per year: the ten most recent full calendar years
@@ -480,140 +480,140 @@ const hhAvg10Label = `10-Year Average, ${hh.years[hhFullIdx[0]]}–${hh.years[hh
 
 // Scoped plugin: dashed horizontal line at the 10-year average, spanning the full chart area
 const housingAvgLinePlugin = {
-  id:'housingAvgLine',
-  afterDatasetsDraw(chart){
-    const {ctx, chartArea, scales} = chart;
-    const yPx = scales.y.getPixelForValue(hhAvg10);
-    ctx.save();
-    ctx.beginPath();
-    ctx.setLineDash([8,6]);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#d6336c';
-    ctx.moveTo(chartArea.left, yPx);
-    ctx.lineTo(chartArea.right, yPx);
-    ctx.stroke();
-    ctx.restore();
-  }
+id:'housingAvgLine',
+afterDatasetsDraw(chart){
+const {ctx, chartArea, scales} = chart;
+const yPx = scales.y.getPixelForValue(hhAvg10);
+ctx.save();
+ctx.beginPath();
+ctx.setLineDash([8,6]);
+ctx.lineWidth = 2;
+ctx.strokeStyle = '#d6336c';
+ctx.moveTo(chartArea.left, yPx);
+ctx.lineTo(chartArea.right, yPx);
+ctx.stroke();
+ctx.restore();
+}
 };
 
 new Chart(document.getElementById('chartHousingCombined'), {
-  type:'bar',
-  data:{
-    labels: hh.years,
-    datasets:[
-      {label:'Single Family', backgroundColor:'#2f6fed', data: hh.singleFamily},
-      {label:'2 & 3 Family', backgroundColor:'#f0a63d', data: hh.twoThreeFamily},
-      {label:'Multi-Family / Apartments', backgroundColor:'#2f9e58', data: hh.multiFamilyApts}
-    ]
-  },
-  plugins:[housingAvgLinePlugin, housingTotalsPlugin],
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    layout:{padding:{top:22}},
-    plugins:{
-      legend:{
-        position:'bottom',
-        labels:{
-          usePointStyle:true,
-          generateLabels(chart){
-            const items = Chart.defaults.plugins.legend.labels.generateLabels(chart);
-            items.forEach(it=>{ it.pointStyle = 'rect'; });
-            items.push({text: hhAvg10Label, pointStyle:'line', strokeStyle:'#d6336c', fillStyle:'#d6336c', lineWidth:2, lineDash:[5,4], hidden:false});
-            return items;
-          }
-        },
-        onClick(e, item, legend){
-          if (item.datasetIndex === undefined) return; // the average line is not a toggleable dataset
-          Chart.defaults.plugins.legend.onClick.call(this, e, item, legend);
-        }
-      },
-      tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtInt(c.raw)}`}},
-      datalabels:{display:false}
-    },
-    scales:{
-      x:{stacked:true, ticks:{maxRotation:45,minRotation:45,autoSkip:false,font:{size:11}}},
-      y:{stacked:true, beginAtZero:true, title:{display:true,text:'Units Permitted'}}
-    }
-  }
+type:'bar',
+data:{
+labels: hh.years,
+datasets:[
+{label:'Single Family', backgroundColor:'#2f6fed', data: hh.singleFamily},
+{label:'2 & 3 Family', backgroundColor:'#f0a63d', data: hh.twoThreeFamily},
+{label:'Multi-Family / Apartments', backgroundColor:'#2f9e58', data: hh.multiFamilyApts}
+]
+},
+plugins:[housingAvgLinePlugin, housingTotalsPlugin],
+options:{
+responsive:true,maintainAspectRatio:false,
+layout:{padding:{top:22}},
+plugins:{
+legend:{
+position:'bottom',
+labels:{
+usePointStyle:true,
+generateLabels(chart){
+const items = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+items.forEach(it=>{ it.pointStyle = 'rect'; });
+items.push({text: hhAvg10Label, pointStyle:'line', strokeStyle:'#d6336c', fillStyle:'#d6336c', lineWidth:2, lineDash:[5,4], hidden:false});
+return items;
+}
+},
+onClick(e, item, legend){
+if (item.datasetIndex === undefined) return; // the average line is not a toggleable dataset
+Chart.defaults.plugins.legend.onClick.call(this, e, item, legend);
+}
+},
+tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtInt(c.raw)}`}},
+datalabels:{display:false}
+},
+scales:{
+x:{stacked:true, ticks:{maxRotation:45,minRotation:45,autoSkip:false,font:{size:11}}},
+y:{stacked:true, beginAtZero:true, title:{display:true,text:'Units Permitted'}}
+}
+}
 });
 
 // Subdivision breakdown chart (2026 new home permits)
 const subdivColors = ['#2f6fed','#17a2b8','#f0a63d','#8bb7f0','#9b59b6','#2f9e58','#64748b'];
 new Chart(document.getElementById('chartSubdivision'), {
-  type:'bar',
-  data:{
-    labels: data.subdivision2026.labels,
-    datasets:[{
-      label:'New Home Permits',
-      backgroundColor: subdivColors,
-      data: data.subdivision2026.counts
-    }]
-  },
-  options:{
-    responsive:true,maintainAspectRatio:false,
-    plugins:{
-      legend:{display:false},
-      tooltip:{callbacks:{label:c=>`${fmtInt(c.raw)} permits`}},
-      datalabels:{
-        display:true,
-        anchor:'end',
-        align:'top',
-        color:'#1b2a4a',
-        font:{weight:'700', size:12},
-        formatter:v=>fmtInt(v)
-      }
-    },
-    scales:{y:{beginAtZero:true,title:{display:true,text:'New Home Permits (Single Family + 2/3 Family)'}}}
-  }
+type:'bar',
+data:{
+labels: data.subdivision2026.labels,
+datasets:[{
+label:'New Home Permits',
+backgroundColor: subdivColors,
+data: data.subdivision2026.counts
+}]
+},
+options:{
+responsive:true,maintainAspectRatio:false,
+plugins:{
+legend:{display:false},
+tooltip:{callbacks:{label:c=>`${fmtInt(c.raw)} permits`}},
+datalabels:{
+display:true,
+anchor:'end',
+align:'top',
+color:'#1b2a4a',
+font:{weight:'700', size:12},
+formatter:v=>fmtInt(v)
+}
+},
+scales:{y:{beginAtZero:true,title:{display:true,text:'New Home Permits (Single Family + 2/3 Family)'}}}
+}
 });
 
 // Code enforcement KPIs
 const kpiCEEl = document.getElementById('kpiCE');
 {
-  const y = data.codeEnforcement.annual["2026 YTD"];
-  const y25 = data.codeEnforcement.annual["2025"];
-  const items = [
-    {label:'Grass/Weed Complaints <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.grass)+' cases', sub:`FY25 total: ${fmtInt(y25.grass)}`},
-    {label:'All Other Code Violations <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.other)+' cases', sub:`FY25 total: ${fmtInt(y25.other)}`},
-    {label:'Total Code Enforcement <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.grass+y.other)+' cases', sub:`FY25 total: ${fmtInt(y25.grass+y25.other)}`}
-  ];
-  items.forEach(it=>{
-    const div = document.createElement('div');
-    div.className='kpi';
-    div.innerHTML = `<div class="label">${it.label}</div><div class="value">${it.value}</div><div class="sub">${it.sub}</div>`;
-    kpiCEEl.appendChild(div);
-  });
+const y = data.codeEnforcement.annual["2026 YTD"];
+const y25 = data.codeEnforcement.annual["2025"];
+const items = [
+{label:'Grass/Weed Complaints <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.grass)+' cases', sub:`FY25 total: ${fmtInt(y25.grass)}`},
+{label:'All Other Code Violations <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.other)+' cases', sub:`FY25 total: ${fmtInt(y25.other)}`},
+{label:'Total Code Enforcement <span class="pill ytd">2026 YTD</span>', value: fmtInt(y.grass+y.other)+' cases', sub:`FY25 total: ${fmtInt(y25.grass+y25.other)}`}
+];
+items.forEach(it=>{
+const div = document.createElement('div');
+div.className='kpi';
+div.innerHTML = `<div class="label">${it.label}</div><div class="value">${it.value}</div><div class="sub">${it.sub}</div>`;
+kpiCEEl.appendChild(div);
+});
 }
 
 // CE annual chart (2022-2026 YTD)
 const ceYears = ["2022","2023","2024","2025","2026 YTD"];
 new Chart(document.getElementById('chartCEAnnual'), {
-  type:'bar',
-  data:{
-    labels:ceYears,
-    datasets:[
-      {label:'Grass/Weed', backgroundColor:'#2f9e58', data: ceYears.map(y=>data.codeEnforcement.annual[y].grass)},
-      {label:'All Other Violations', backgroundColor:'#d9534f', data: ceYears.map(y=>data.codeEnforcement.annual[y].other)}
-    ]
-  },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'},datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,title:{display:true,text:'Cases'}},x:{stacked:false}}}
+type:'bar',
+data:{
+labels:ceYears,
+datasets:[
+{label:'Grass/Weed', backgroundColor:'#2f9e58', data: ceYears.map(y=>data.codeEnforcement.annual[y].grass)},
+{label:'All Other Violations', backgroundColor:'#d9534f', data: ceYears.map(y=>data.codeEnforcement.annual[y].other)}
+]
+},
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'},datalabels:{display:false}},
+scales:{y:{beginAtZero:true,title:{display:true,text:'Cases'}},x:{stacked:false}}}
 });
 
 // CE monthly chart
 new Chart(document.getElementById('chartCEMonthly'), {
-  type:'bar',
-  data:{
-    labels: data.codeEnforcement.monthly2026.labels,
-    datasets:[
-      {label:'Grass/Weed', backgroundColor:'#2f9e58', data: data.codeEnforcement.monthly2026.grass},
-      {label:'All Other Violations', backgroundColor:'#d9534f', data: data.codeEnforcement.monthly2026.other}
-    ]
-  },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'},datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,title:{display:true,text:'Cases'}}}}
+type:'bar',
+data:{
+labels: data.codeEnforcement.monthly2026.labels,
+datasets:[
+{label:'Grass/Weed', backgroundColor:'#2f9e58', data: data.codeEnforcement.monthly2026.grass},
+{label:'All Other Violations', backgroundColor:'#d9534f', data: data.codeEnforcement.monthly2026.other}
+]
+},
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'},datalabels:{display:false}},
+scales:{y:{beginAtZero:true,title:{display:true,text:'Cases'}}}}
 });
 
 // =====================================================================
@@ -627,142 +627,142 @@ const afford = data.affordability;
 const acs = data.acs;
 
 const commColors = {
-  "Hilliard":"#2f6fed", "Dublin":"#9b59b6", "Gahanna":"#f0a63d",
-  "Grove City":"#2f9e58", "Westerville":"#d9534f",
-  "Franklin County":"#64748b", "Columbus metro":"#64748b"
+"Hilliard":"#2f6fed", "Dublin":"#9b59b6", "Gahanna":"#f0a63d",
+"Grove City":"#2f9e58", "Westerville":"#d9534f",
+"Franklin County":"#64748b", "Columbus metro":"#64748b"
 };
 function lineDataset(label, arr, opts){
-  const muted = label==="Franklin County" || label==="Columbus metro" || /HUD Area Median/.test(label);
-  return Object.assign({
-    label, data: arr, borderColor: commColors[label] || (opts&&opts.color) || '#2f6fed',
-    backgroundColor: 'transparent',
-    borderWidth: label==="Hilliard" || /Income needed/.test(label) ? 3 : 1.5,
-    borderDash: muted ? [5,4] : [],
-    pointRadius: 0, tension:0.25, spanGaps:true
-  }, opts||{});
+const muted = label==="Franklin County" || label==="Columbus metro" || /HUD Area Median/.test(label);
+return Object.assign({
+label, data: arr, borderColor: commColors[label] || (opts&&opts.color) || '#2f6fed',
+backgroundColor: 'transparent',
+borderWidth: label==="Hilliard" || /Income needed/.test(label) ? 3 : 1.5,
+borderDash: muted ? [5,4] : [],
+pointRadius: 0, tension:0.25, spanGaps:true
+}, opts||{});
 }
 
 // Affordability KPI cards
 {
-  const el = document.getElementById('kpiAfford');
-  const k = afford.kpis;
-  const items = [
-    {label:`Median Sale Price <span class="pill ytd">${afford.asOf}</span>`, value: fmtUSD(k.medianPrice.value), sub:`${fmtSigned(k.medianPrice.yoy,true)} vs one year ago`},
-    {label:`Income Needed to Buy Median Home <span class="pill ytd">${afford.asOf}</span>`, value: fmtUSDk(k.incomeNeeded.value), sub:`HUD Area Median Income: ${fmtUSDk(k.incomeNeeded.ami)} (above AMI)`},
-    {label:`Median Price per Sq Ft <span class="pill ytd">${afford.asOf}</span>`, value: '$'+k.pricePerSqft.value, sub:`${fmtSigned(k.pricePerSqft.yoy,true)} vs one year ago`},
-    {label:`Typical Rent (Zillow) <span class="pill ytd">${afford.asOf}</span>`, value: fmtUSD(k.typicalRent.value), sub:`${fmtSigned(k.typicalRent.yoy,true)} vs one year ago`}
-  ];
-  items.forEach(it=>{
-    const div = document.createElement('div');
-    div.className='kpi';
-    div.innerHTML = `<div class="label">${it.label}</div><div class="value">${it.value}</div><div class="sub">${it.sub}</div>`;
-    el.appendChild(div);
-  });
+const el = document.getElementById('kpiAfford');
+const k = afford.kpis;
+const items = [
+{label:`Median Sale Price <span class="pill ytd">${afford.asOf}</span>`, value: fmtUSD(k.medianPrice.value), sub:`${fmtSigned(k.medianPrice.yoy,true)} vs one year ago`},
+{label:`Income Needed to Buy Median Home <span class="pill ytd">${afford.asOf}</span>`, value: fmtUSDk(k.incomeNeeded.value), sub:`HUD Area Median Income: ${fmtUSDk(k.incomeNeeded.ami)} (above AMI)`},
+{label:`Median Price per Sq Ft <span class="pill ytd">${afford.asOf}</span>`, value: '$'+k.pricePerSqft.value, sub:`${fmtSigned(k.pricePerSqft.yoy,true)} vs one year ago`},
+{label:`Typical Rent (Zillow) <span class="pill ytd">${afford.asOf}</span>`, value: fmtUSD(k.typicalRent.value), sub:`${fmtSigned(k.typicalRent.yoy,true)} vs one year ago`}
+];
+items.forEach(it=>{
+const div = document.createElement('div');
+div.className='kpi';
+div.innerHTML = `<div class="label">${it.label}</div><div class="value">${it.value}</div><div class="sub">${it.sub}</div>`;
+el.appendChild(div);
+});
 }
 
 // Median home sale price by community
 new Chart(document.getElementById('chartAffordPrice'), {
-  type:'line',
-  data:{ labels: afford.quarters, datasets: Object.keys(afford.price).map(c=>lineDataset(c, afford.price[c])) },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}`}}, datalabels:{display:false}},
-    scales:{y:{beginAtZero:false,ticks:{callback:v=>fmtUSDk(v)},title:{display:true,text:'Median Sale Price'}}}}
+type:'line',
+data:{ labels: afford.quarters, datasets: Object.keys(afford.price).map(c=>lineDataset(c, afford.price[c])) },
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}`}}, datalabels:{display:false}},
+scales:{y:{beginAtZero:false,ticks:{callback:v=>fmtUSDk(v)},title:{display:true,text:'Median Sale Price'}}}}
 });
 
 // Income needed vs AMI
 new Chart(document.getElementById('chartAffordIncome'), {
-  type:'line',
-  data:{ labels: afford.quarters, datasets: Object.keys(afford.income).map(k=>lineDataset(k, afford.income[k])) },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10.5}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}`}}, datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtUSDk(v)},title:{display:true,text:'Household Income'}}}}
+type:'line',
+data:{ labels: afford.quarters, datasets: Object.keys(afford.income).map(k=>lineDataset(k, afford.income[k])) },
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10.5}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}`}}, datalabels:{display:false}},
+scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtUSDk(v)},title:{display:true,text:'Household Income'}}}}
 });
 
 // Median price per sqft
 new Chart(document.getElementById('chartAffordPpsf'), {
-  type:'line',
-  data:{ labels: afford.quarters, datasets: Object.keys(afford.ppsf).map(c=>lineDataset(c, afford.ppsf[c])) },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: $${c.raw}/sq ft`}}, datalabels:{display:false}},
-    scales:{y:{beginAtZero:false,ticks:{callback:v=>'$'+v},title:{display:true,text:'$ / Sq Ft'}}}}
+type:'line',
+data:{ labels: afford.quarters, datasets: Object.keys(afford.ppsf).map(c=>lineDataset(c, afford.ppsf[c])) },
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: $${c.raw}/sq ft`}}, datalabels:{display:false}},
+scales:{y:{beginAtZero:false,ticks:{callback:v=>'$'+v},title:{display:true,text:'$ / Sq Ft'}}}}
 });
 
 // Typical asking rent
 new Chart(document.getElementById('chartAffordRent'), {
-  type:'line',
-  data:{ labels: afford.quarters, datasets: Object.keys(afford.rent).map(c=>lineDataset(c, afford.rent[c])) },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}/mo`}}, datalabels:{display:false}},
-    scales:{y:{beginAtZero:false,ticks:{callback:v=>fmtUSD(v)},title:{display:true,text:'Typical Asking Rent'}}}}
+type:'line',
+data:{ labels: afford.quarters, datasets: Object.keys(afford.rent).map(c=>lineDataset(c, afford.rent[c])) },
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}/mo`}}, datalabels:{display:false}},
+scales:{y:{beginAtZero:false,ticks:{callback:v=>fmtUSD(v)},title:{display:true,text:'Typical Asking Rent'}}}}
 });
 
 // Sale prices by home type
 new Chart(document.getElementById('chartAffordType'), {
-  type:'line',
-  data:{ labels: afford.quarters, datasets: [
-    lineDataset("Single-family detached", afford.byType["Single-family detached"], {borderColor:'#2f6fed', borderWidth:2.5}),
-    lineDataset("Condo / townhome", afford.byType["Condo / townhome"], {borderColor:'#f0a63d', borderWidth:2.5})
-  ]},
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}`}}, datalabels:{display:false}},
-    scales:{y:{beginAtZero:false,ticks:{callback:v=>fmtUSDk(v)},title:{display:true,text:'Median Sale Price'}}}}
+type:'line',
+data:{ labels: afford.quarters, datasets: [
+lineDataset("Single-family detached", afford.byType["Single-family detached"], {borderColor:'#2f6fed', borderWidth:2.5}),
+lineDataset("Condo / townhome", afford.byType["Condo / townhome"], {borderColor:'#f0a63d', borderWidth:2.5})
+]},
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}`}}, datalabels:{display:false}},
+scales:{y:{beginAtZero:false,ticks:{callback:v=>fmtUSDk(v)},title:{display:true,text:'Median Sale Price'}}}}
 });
 
 // Latest quarter at a glance table
 {
-  const tbl = document.getElementById('tblAfford');
-  let html = '<thead><tr><th>Community</th><th>Valid Sales</th><th>Median Price</th><th>YoY Change</th><th>$ / Sq Ft</th><th>Income Needed</th></tr></thead><tbody>';
-  afford.latestQuarter.forEach(r=>{
-    html += `<tr><td>${r.community}</td><td>${fmtInt(r.sales)}</td><td>${fmtUSD(r.price)}</td><td>${fmtSigned(r.yoy,true)}</td><td>$${r.ppsf}</td><td>${fmtUSDk(r.incomeNeeded)}</td></tr>`;
-  });
-  html += '</tbody>';
-  tbl.innerHTML = html;
+const tbl = document.getElementById('tblAfford');
+let html = '<thead><tr><th>Community</th><th>Valid Sales</th><th>Median Price</th><th>YoY Change</th><th>$ / Sq Ft</th><th>Income Needed</th></tr></thead><tbody>';
+afford.latestQuarter.forEach(r=>{
+html += `<tr><td>${r.community}</td><td>${fmtInt(r.sales)}</td><td>${fmtUSD(r.price)}</td><td>${fmtSigned(r.yoy,true)}</td><td>$${r.ppsf}</td><td>${fmtUSDk(r.incomeNeeded)}</td></tr>`;
+});
+html += '</tbody>';
+tbl.innerHTML = html;
 }
 
 // ACS context charts
 new Chart(document.getElementById('chartAcsIncome'), {
-  type:'line',
-  data:{ labels: acs.years, datasets: Object.keys(acs.income).map(c=>lineDataset(c, acs.income[c])) },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}`}}, datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtUSDk(v)},title:{display:true,text:'Median Household Income'}}}}
+type:'line',
+data:{ labels: acs.years, datasets: Object.keys(acs.income).map(c=>lineDataset(c, acs.income[c])) },
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtUSD(c.raw)}`}}, datalabels:{display:false}},
+scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtUSDk(v)},title:{display:true,text:'Median Household Income'}}}}
 });
 
 new Chart(document.getElementById('chartAcsRenter'), {
-  type:'line',
-  data:{ labels: acs.years, datasets: Object.keys(acs.renterShare).map(c=>lineDataset(c, acs.renterShare[c])) },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtPct1(c.raw)}`}}, datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtPct1(v)},title:{display:true,text:'Share of Households Renting'}}}}
+type:'line',
+data:{ labels: acs.years, datasets: Object.keys(acs.renterShare).map(c=>lineDataset(c, acs.renterShare[c])) },
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtPct1(c.raw)}`}}, datalabels:{display:false}},
+scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtPct1(v)},title:{display:true,text:'Share of Households Renting'}}}}
 });
 
 new Chart(document.getElementById('chartAcsBurden'), {
-  type:'line',
-  data:{ labels: acs.years, datasets: Object.keys(acs.burden).map(c=>lineDataset(c, acs.burden[c])) },
-  options:{responsive:true,maintainAspectRatio:false,
-    plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtPct1(c.raw)}`}}, datalabels:{display:false}},
-    scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtPct1(v)},title:{display:true,text:'Renters Cost-Burdened (30%+)'}}}}
+type:'line',
+data:{ labels: acs.years, datasets: Object.keys(acs.burden).map(c=>lineDataset(c, acs.burden[c])) },
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom'}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtPct1(c.raw)}`}}, datalabels:{display:false}},
+scales:{y:{beginAtZero:true,ticks:{callback:v=>fmtPct1(v)},title:{display:true,text:'Renters Cost-Burdened (30%+)'}}}}
 });
 
 {
-  const mixColors = {
-    "Single-family detached":"#2f6fed", "Townhome / SF attached":"#17a2b8",
-    "2–4 unit buildings":"#f0a63d", "5+ unit buildings":"#9b59b6", "Other / mobile":"#64748b"
-  };
-  const cats = Object.keys(acs.mix.categories);
-  new Chart(document.getElementById('chartAcsMix'), {
-    type:'bar',
-    data:{
-      labels: acs.mix.cities,
-      datasets: cats.map(cat=>({
-        label: cat, backgroundColor: mixColors[cat],
-        data: acs.mix.cities.map(city=>acs.mix.categories[cat][city])
-      }))
-    },
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.raw}%`}}, datalabels:{display:false}},
-      scales:{x:{stacked:true}, y:{stacked:true,beginAtZero:true,max:100,ticks:{callback:v=>v+'%'},title:{display:true,text:'% of Housing Stock'}}}}
-  });
+const mixColors = {
+"Single-family detached":"#2f6fed", "Townhome / SF attached":"#17a2b8",
+"2–4 unit buildings":"#f0a63d", "5+ unit buildings":"#9b59b6", "Other / mobile":"#64748b"
+};
+const cats = Object.keys(acs.mix.categories);
+new Chart(document.getElementById('chartAcsMix'), {
+type:'bar',
+data:{
+labels: acs.mix.cities,
+datasets: cats.map(cat=>({
+label: cat, backgroundColor: mixColors[cat],
+data: acs.mix.cities.map(city=>acs.mix.categories[cat][city])
+}))
+},
+options:{responsive:true,maintainAspectRatio:false,
+plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:10}}}, tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${c.raw}%`}}, datalabels:{display:false}},
+scales:{x:{stacked:true}, y:{stacked:true,beginAtZero:true,max:100,ticks:{callback:v=>v+'%'},title:{display:true,text:'% of Housing Stock'}}}}
+});
 }
 </script>
 </body>
